@@ -1,0 +1,45 @@
+@import './variables';
+
+.color--white {
+  color: $white;
+}
+
+.color--green {
+  color: $green;
+}
+
+.font-size--xs {
+  font-size: $font-size--small;
+}
+
+.font-size--sm {
+  font-size: $font-size--normal;
+}
+
+.font-size--md {
+  font-size: $font-size--big;
+}
+
+.font-size--lg {
+  font-size: $font-size--jumbo;
+}
+
+.padding--all--xs {
+  padding: $spacing-xs;
+}
+
+.padding--all--sm {
+  padding: $spacing-sm;
+}
+
+.padding--all--md {
+  padding: $spacing-md;
+}
+
+.padding--all--lg {
+  padding: $spacing-lg;
+}
+
+.background--almost-black {
+  background-color: $almostBlack;
+}
