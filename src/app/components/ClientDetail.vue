@@ -1,13 +1,13 @@
 <template>
     <div>
-        Sales Summary
+        Client Detail
     </div>
 </template>
 
 <script>
     import Vue from 'vue';
 
-    export default Vue.component("t-sales", {
+    export default Vue.component("t-client-detail", {
 
     });
 </script>
