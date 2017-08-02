@@ -6,8 +6,10 @@ let config = {
     entry: helpers.root("src/app/App.js"),
     resolve: {
         extensions: [".js"],
-        modules: [helpers.root("node_modules")]
-
+        modules: [helpers.root("node_modules")],
+        alias: {
+            vue: 'vue/dist/vue.js'
+        }
     },
     module: {
         loaders: [
