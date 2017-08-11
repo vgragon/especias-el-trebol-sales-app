@@ -15,6 +15,13 @@ let config = webpackMerge(commonConfiguration, {
         path: helpers.root("dist"),
         filename: "bundle.js"
     },
+    module: {
+        loaders: [{
+            test: /\.json$/,
+            exclude: /node_modules/,
+            loader: 'json-loader'
+        }]
+    },
     devServer: {
         port: METADATA.port,
         host: METADATA.host,

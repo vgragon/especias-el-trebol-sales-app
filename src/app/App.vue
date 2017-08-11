@@ -4,7 +4,7 @@
             <div class="t-navigation-container">
                 <t-navigation></t-navigation>
             </div>
-            <main class="t-main-container">
+            <main class="t-main-container uk-grid padding--all--lg">
                 <router-view></router-view>
             </main>
         </div>
@@ -24,7 +24,9 @@
 
 <style lang="scss">
     @import './helpers';
-    @import '../../node_modules/uikit/dist/css/uikit.min.css';
+    $bootstrap-sass-asset-helper: false;
+    $icon-font-path: '../../node_modules/bootstrap-sass/assets/fonts/bootstrap/';
+    @import '../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap';
 
     html {
         color: $black;
@@ -33,6 +35,7 @@
     body {
         margin: 0;
         font-family: 'Roboto', sans-serif;
+        font-weight: lighter;
         background-color: $white;
     }
 
@@ -40,6 +43,11 @@
         width: 100%;
         height: 100%;
         position: relative;
+    }
+
+    .t-main-container {
+        max-width: 1200px;
+        margin: auto;
     }
 
     .router-link-active {

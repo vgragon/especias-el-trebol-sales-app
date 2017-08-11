@@ -1,8 +1,8 @@
 <template>
-    <div class="t-navigation background--almost-black">
+    <div class="t-navigation background--grey">
         <div class="t-navigation__items" v-for="item in items">
             <router-link :to="item.route">
-                <span class="font-size--sm padding--all--xs color--white">{{item.name}}</span>
+                <span class="font-size--sm padding--bottom--xs padding--left--sm padding--right--sm color--black">{{item.name}}</span>
             </router-link>
         </div>
     </div>
@@ -31,6 +31,7 @@
         width: 100%;
         height: 40%;
         text-align: center;
+        box-shadow: 0 0 1px #000;
 
         .t-navigation__items {
             display: inline-block;

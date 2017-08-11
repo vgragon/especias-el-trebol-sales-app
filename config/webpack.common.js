@@ -12,8 +12,7 @@ let config = {
         }
     },
     module: {
-        loaders: [
-            {
+        loaders: [{
                 test: /\.js$/,
                 exclude: /node_modules/,
                 loader: "babel-loader"
@@ -21,6 +20,19 @@ let config = {
             {
                 test: /\.vue$/,
                 loader: "vue-loader"
+            },
+            {
+                test: /\.(png|jpe?g|gif|svg|ico)$/,
+                use: "url-loader?name=assets/[name].[hash:20].[ext]&limit=10000"
+            },
+            // -- START: FONT AWESOME -- //
+            {
+                test: /\.woff2?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                use: "url-loader"
+            },
+            {
+                test: /\.(ttf|eot|svg)(\?[\s\S]+)?$/,
+                use: 'file-loader'
             },
             {
                 test: /\.scss$/,

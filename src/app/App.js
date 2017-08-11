@@ -2,12 +2,12 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 
 import App from './App.vue';
-import SalesSummary from './components/Sales.vue';
-import SalesDetail from './components/SalesDetail.vue';
-import Employees from './components/Employees.vue';
-import EmployeeDetail from './components/EmployeeDetail.vue';
-import Clients from './components/Clients.vue';
-import ClientDetail from './components/ClientDetail.vue';
+import SalesSummary from './components/sales/Sales.vue';
+import SalesDetail from './components/sales/SalesDetail.vue';
+import Employees from './components/employees/Employees.vue';
+import EmployeeDetail from './components/employees/EmployeeDetail.vue';
+import Clients from './components/clients/Clients.vue';
+import ClientDetail from './components/clients/ClientDetail.vue';
 
 const routes = [
     {path: '/', redirect: '/sales'},
