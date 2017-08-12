@@ -1,6 +1,8 @@
 const webpack = require("webpack");
 const path = require("path");
 const helpers = require("./webpack.helpers.js");
+const DefinePlugin = require("webpack/lib/DefinePlugin");
+const METADATA = require("./webpack.metadata.js");
 
 let config = {
     entry: helpers.root("src/app/App.js"),
@@ -19,6 +21,7 @@ let config = {
             },
             {
                 test: /\.vue$/,
+                exclude: /node_modules/,
                 loader: "vue-loader"
             },
             {
@@ -51,7 +54,18 @@ let config = {
                 loader: "html-loader"
             }
         ]
-    }
+    },
+    plugins: [
+        new DefinePlugin({
+            "ENV": JSON.stringify(METADATA.ENV),
+            "baseUrl": JSON.stringify(METADATA.baseUrl),
+            "carbon": {
+                "application_slug": JSON.stringify(METADATA.carbon.application_slug),
+                "https": JSON.stringify(METADATA.carbon.https),
+                "domain": JSON.stringify(METADATA.carbon.domain)
+            }
+        })
+    ]
 };
 
 module.exports = config;
