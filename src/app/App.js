@@ -9,15 +9,40 @@ import EmployeeDetail from './components/employees/EmployeeDetail.vue';
 import Clients from './components/clients/Clients.vue';
 import ClientDetail from './components/clients/ClientDetail.vue';
 
-const routes = [
-    {path: '/', redirect: '/sales'},
-    {path: '/sales', component: SalesSummary, children: [{path: ':id', component: SalesDetail}]},
-    {path: '/employees', component: Employees, children: [{path: ':id', component: EmployeeDetail}]},
-    {path: '/clients', component: Clients, children: [{path: ':id', component: ClientDetail}]},
+const routes = [{
+        path: '/',
+        redirect: '/sales'
+    },
+    {
+        path: '/sales',
+        component: SalesSummary,
+        children: [{
+            path: ':id',
+            component: SalesDetail
+        }]
+    },
+    {
+        path: '/employees',
+        component: Employees,
+        children: [{
+            path: ':id',
+            component: EmployeeDetail
+        }]
+    },
+    {
+        path: '/clients',
+        component: Clients,
+        children: [{
+            path: ':id',
+            component: ClientDetail
+        }]
+    },
 ];
 
 Vue.use(VueRouter);
-const router = new VueRouter({routes});
+const router = new VueRouter({
+    routes
+});
 
 new Vue({
     router,

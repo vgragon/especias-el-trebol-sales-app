@@ -1,5 +1,5 @@
-export default {
-    getMonthNumberJS(monthName) {
+module.exports = {
+    getMonthNumberJS: function(monthName) {
         switch (monthName) {
             case "January":
                 return 0;
@@ -12,7 +12,7 @@ export default {
             case "May":
                 return 4;
             case "June":
-                return 5
+                return 5;
             case "July":
                 return 6;
             case "August":
@@ -27,8 +27,8 @@ export default {
                 return 11;
         }
     },
-    getNaturalMonth(date) {
-        let monthNumber = date.getMonth();
+    getNaturalMonth: function(date) {
+        var monthNumber = date.getMonth();
         switch (monthNumber) {
             case 0:
                 return "January";
@@ -56,10 +56,10 @@ export default {
                 return "December";
         }
     },
-    sortByDate(a, b) {
+    sortByDate: function(a, b) {
         return new Date(b.dateTime) - new Date(a.dateTime);
     },
-    sortByMonth(a, b) {
+    sortByMonth: function(a, b) {
         return new Date(b.dateTime).getMonth() - new Date(a.dateTime).getMonth();
     }
-}
+};

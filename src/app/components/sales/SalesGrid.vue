@@ -20,7 +20,7 @@
 
 <script>
 import Vue from 'vue';
-import SalesService from './SalesService.js';
+const SalesService = require('./SalesService.js');
 
 export default Vue.component("t-sales-grid", {
     props: ['data'],

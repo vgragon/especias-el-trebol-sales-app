@@ -1,7 +1,16 @@
-[{
+[
+  {
     "id": "0",
     "name": "Pueblo Bonito",
     "telephoneNumber": "8117100358",
     "email": "pueblo.bonito@emeraldbay.com",
     "address": "Emerald Bay Somewhere"
-}]
+  },
+  {
+    "id": "1",
+    "name": "Operadora Polar",
+    "telephoneNumber": "811729298",
+    "email": "operadora.polar@op.com",
+    "address": "Carretera Nacional S/N"
+  }
+]

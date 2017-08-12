@@ -1,7 +1,7 @@
 <template>
 <section class="t-section">
     <div class="t-section__header margin--bottom--sm">
-        <h1 class="heading--h1">Sales records summary</h1>
+        <h1 class="heading--h1">Sales summary</h1>
     </div>
     <t-sales-filters :data="sales" :busEvent="'salesFilterSelected'" v-if="!isLoading"></t-sales-filters>
     <t-sales-grid :data="groupedSales"></t-sales-grid>
@@ -13,7 +13,7 @@ import Vue from 'vue';
 import SalesFilters from './SalesFilters.vue';
 import SalesGrid from './SalesGrid.vue';
 import bus from '../../bus.js';
-import SalesService from './SalesService.js';
+const SalesService = require('./SalesService.js');
 
 // Test
 let importedSales = require('../../../../data/sales.json');
