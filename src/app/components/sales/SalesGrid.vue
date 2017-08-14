@@ -11,7 +11,7 @@
                     </div>
                     <div class="t-grid__element__content"
                          :class="{'t-number--positive': sale.amount > 0, 't-number--negative': sale.amount < 0}">
-                        {{sale.amount}}
+                        {{formatNumber('CURRENCY', sale.amount)}}
                     </div>
                 </div>
             </div>
@@ -36,6 +36,19 @@
                     return date.getFullYear();
                 } else if (criteria === "MONTH") {
                     return SalesService.getNaturalMonth(date);
+                }
+            },
+            formatNumber(criteria, number) {
+                if (criteria === "CURRENCY") {
+                    let numberStringed = (number + "").split("").reverse().join("");
+                    let formattedNumber = "";
+                    let counter = 1;
+                    for (let char of numberStringed) {
+                        if (counter % 4 === 0 && !Number.isNaN(Number.parseInt(char))) formattedNumber = "," + formattedNumber;
+                        formattedNumber = char + formattedNumber;
+                        counter++;
+                    }
+                    return formattedNumber;
                 }
             }
         }
