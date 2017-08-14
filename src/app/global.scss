@@ -150,6 +150,14 @@ a {
   }
 }
 
+.t-number--positive {
+  color: $green;
+}
+
+.t-number--negative {
+  color: $red;
+}
+
 .t-button {
   width: 90px;
   color: $white;

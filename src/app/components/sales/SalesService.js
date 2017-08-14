@@ -1,5 +1,5 @@
 export default {
-    getMonthNumberJS: function(monthName) {
+    getMonthNumberJS: function (monthName) {
         switch (monthName) {
             case "January":
                 return 0;
@@ -27,7 +27,7 @@ export default {
                 return 11;
         }
     },
-    getNaturalMonth: function(date) {
+    getNaturalMonth: function (date) {
         let monthNumber = date.getMonth();
         switch (monthNumber) {
             case 0:
@@ -41,7 +41,7 @@ export default {
             case 4:
                 return "May";
             case 5:
-                return "June"
+                return "June";
             case 6:
                 return "July";
             case 7:
@@ -56,10 +56,29 @@ export default {
                 return "December";
         }
     },
-    sortByDate: function(a, b) {
+    getNaturalDay: function (date) {
+        let dayNumber = date.getDay();
+        switch (dayNumber) {
+            case 0:
+                return "Mon";
+            case 1:
+                return "Tue";
+            case 2:
+                return "Wed";
+            case 3:
+                return "Thu";
+            case 4:
+                return "Fri";
+            case 5:
+                return "Sat";
+            case 6:
+                return "Sun";
+        }
+    },
+    sortByDate: function (a, b) {
         return new Date(b.dateTime) - new Date(a.dateTime);
     },
-    sortByMonth: function(a, b) {
+    sortByMonth: function (a, b) {
         return new Date(b.dateTime).getMonth() - new Date(a.dateTime).getMonth();
     }
 };

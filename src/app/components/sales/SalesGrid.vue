@@ -7,9 +7,10 @@
             <div class="t-grid__section__content">
                 <div class="t-grid__section__element" v-for="sale in section.records">
                     <div class="t-grid__element__title">
-                        {{getTimeValue("DAY", sale.dateTime)}}
+                        {{getTimeValue("FRIENDLY_DAY", sale.dateTime)}} {{getTimeValue("DAY", sale.dateTime)}}
                     </div>
-                    <div class="t-grid__element__content">
+                    <div class="t-grid__element__content"
+                         :class="{'t-number--positive': sale.amount > 0, 't-number--negative': sale.amount < 0}">
                         {{sale.amount}}
                     </div>
                 </div>
@@ -29,6 +30,8 @@
                 let date = new Date(dateTime);
                 if (criteria === "DAY") {
                     return date.getDate();
+                } else if (criteria === "FRIENDLY_DAY") {
+                    return SalesService.getNaturalDay(date);
                 } else if (criteria === "YEAR") {
                     return date.getFullYear();
                 } else if (criteria === "MONTH") {
