@@ -171,6 +171,14 @@ a {
       background-color: darken($green, 5);
     }
   }
+
+  &.t-button--default {
+    background-color: $lightGrey;
+
+    &:hover {
+      background-color: darken($lightGrey, 5);
+    }
+  }
 }
 
 .t-person-detail__image {
@@ -201,4 +209,8 @@ a {
     display: inline-block;
     min-width: 200px;
   }
+}
+
+.t-indicator--mandatory {
+  color: $red;
 }

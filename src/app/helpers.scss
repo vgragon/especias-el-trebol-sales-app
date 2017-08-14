@@ -141,19 +141,19 @@
 }
 
 .margin--bottom--xs {
-  margin-bottom: $spacing-xs;
+  margin-bottom: $spacing-xs !important;
 }
 
 .margin--bottom--sm {
-  margin-bottom: $spacing-sm;
+  margin-bottom: $spacing-sm !important;
 }
 
 .margin--bottom--md {
-  margin-bottom: $spacing-md;
+  margin-bottom: $spacing-md !important;
 }
 
 .margin--bottom--lg {
-  margin-bottom: $spacing-lg;
+  margin-bottom: $spacing-lg !important;
 }
 
 .background--almost-black {
@@ -197,5 +197,9 @@
 }
 
 .inline-block {
-    display: inline-block;
+  display: inline-block;
+}
+
+.block {
+  display: block !important;
 }

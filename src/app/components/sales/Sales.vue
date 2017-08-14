@@ -1,7 +1,15 @@
 <template>
     <section class="t-section">
-        <div class="t-section__header margin--bottom--sm">
-            <h1 class="heading--h1">Sales summary</h1>
+        <t-sales-create></t-sales-create>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="t-section__header margin--bottom--sm">
+                    <h1 class="heading--h1 inline-block">Sales summary</h1>
+                    <div class="pull-right">
+                        <a href="javascript:void(0)" class="t-link" @click="toggleModal()">Add sales</a>
+                    </div>
+                </div>
+            </div>
         </div>
         <t-sales-filters :data="sales" :busEvent="'salesFilterSelected'" v-if="!isLoading"></t-sales-filters>
         <t-sales-grid :data="groupedSales"></t-sales-grid>
@@ -12,8 +20,9 @@
     import Vue from 'vue';
     import SalesFilters from './SalesFilters.vue';
     import SalesGrid from './SalesGrid.vue';
-    import bus from '../../bus.js';
     import SalesService from './SalesService.js';
+    import SalesCreate from './SalesCreate.vue';
+    import bus from '../../bus.js';
 
     // Test
     let importedSales = require('../../../../data/sales.json');
@@ -22,7 +31,8 @@
     export default Vue.component("t-sales", {
         components: [
             SalesFilters,
-            SalesGrid
+            SalesGrid,
+            SalesCreate
         ],
         data() {
             return {
@@ -32,6 +42,9 @@
             }
         },
         methods: {
+            toggleModal() {
+                $("#t-sales-create").modal("show");
+            },
             findSalesGroupBy(criteria, record, salesGroup) {
                 let salesGroupDate = new Date(salesGroup.dateTime);
                 let recordDate = new Date(record.dateTime);

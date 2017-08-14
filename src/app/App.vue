@@ -14,6 +14,7 @@
 <script>
     import Vue from 'vue';
     import Navigation from './components/Navigation.vue';
+    window.jQuery = window.$ = require('jquery');
 
     export default Vue.component("app", {
         components: {

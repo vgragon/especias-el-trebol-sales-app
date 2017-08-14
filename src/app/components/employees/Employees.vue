@@ -1,11 +1,12 @@
 <template>
     <section class="t-section">
+        <t-employee-create></t-employee-create>
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                 <div class="t-section__header margin--bottom--sm">
                     <h1 class="heading--h1 inline-block">Employee catalog</h1>
                     <div class="pull-right">
-                        <a href="#" class="t-link">Add employee</a>
+                        <a href="javascript:void(0)" class="t-link" @click="toggleModal()">Add employee</a>
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -27,11 +28,13 @@
     import Vue from 'vue';
     import EmployeeGrid from './../common/SimpleTextFilter.vue';
     import SimpleTextFilter from './EmployeeGrid.vue';
+    import EmployeeCreate from './EmployeeCreate.vue';
     const importedEmployees = require('./../../../../data/employees.json');
+    import Bootstrap from 'bootstrap-sass';
 
     export default Vue.component("t-employees", {
         components: [
-            EmployeeGrid, SimpleTextFilter
+            EmployeeGrid, SimpleTextFilter, EmployeeCreate
         ],
         data() {
             return {
@@ -42,6 +45,9 @@
         methods: {
             showFilteredData(filteredData = []) {
                 this.filteredEmployees = [...filteredData];
+            },
+            toggleModal() {
+                $("#t-employee-create").modal("show");
             }
         },
         mounted() {
@@ -54,7 +60,3 @@
         }
     });
 </script>
-
-<style lang="scss">
-
-</style>
