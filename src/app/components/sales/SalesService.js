@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     getMonthNumberJS: function(monthName) {
         switch (monthName) {
             case "January":
@@ -28,7 +28,7 @@ module.exports = {
         }
     },
     getNaturalMonth: function(date) {
-        var monthNumber = date.getMonth();
+        let monthNumber = date.getMonth();
         switch (monthNumber) {
             case 0:
                 return "January";

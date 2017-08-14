@@ -2,24 +2,24 @@
     <div class="t-sales-filters margin--bottom--sm">
         <div class="t-filter padding--top--sm padding--bottom--sm">
             <label class="align--bottom margin--right--sm">Year</label>
-            <t-dropdown :data="years" @selectedOption="emitFilter('YEAR', $event)"></t-dropdown>
+            <t-dropdown :data="years" @selectedOption="applyFilter('YEAR', $event)"></t-dropdown>
         </div>
         <div class="t-filter padding--top--sm padding--bottom--sm">
             <label class="align--bottom margin--right--sm">Months</label>
-            <t-dropdown :data="months" @selectedOption="emitFilter('DATE_RANGE1', $event)"
+            <t-dropdown :data="months" @selectedOption="applyFilter('DATE_RANGE1', $event)"
                         :placeholder="'From'"></t-dropdown>
             <span class="t-separator">-</span>
-            <t-dropdown :data="months" @selectedOption="emitFilter('DATE_RANGE2', $event)"
+            <t-dropdown :data="months" @selectedOption="applyFilter('DATE_RANGE2', $event)"
                         :placeholder="'To'"></t-dropdown>
         </div>
         <div class="t-filter padding--top--sm padding--bottom--sm">
             <label class="align--bottom margin--right--sm">Person</label>
             <t-dropdown :placeholder="'Select employee'" :data="employees"
                         :displayProperty="['givenName', 'familyName']"
-                        @selectedOption="emitFilter('EMPLOYEE', $event)"></t-dropdown>
+                        @selectedOption="applyFilter('EMPLOYEE', $event)"></t-dropdown>
             <span class="t-separator visibility--hidden">-</span>
             <t-dropdown :placeholder="'Select client'" :data="clients" :displayProperty="'name'"
-                        @selectedOption="emitFilter('CLIENT', $event)"></t-dropdown>
+                        @selectedOption="applyFilter('CLIENT', $event)"></t-dropdown>
         </div>
     </div>
 </template>
@@ -28,7 +28,7 @@
     import Vue from 'vue';
     import Dropdown from '../common/Dropdown.vue';
     import bus from '../../bus.js';
-    const SalesService = require('./SalesService.js');
+    import SalesService from './SalesService.js';
 
     // Test
     let importedEmployees = require('../../../../data/employees.json');
@@ -39,6 +39,12 @@
         components: [
             Dropdown
         ],
+        data() {
+            return {
+                appliedFilters: {},
+                visibleSales: [],
+            }
+        },
         computed: {
             employees: function () {
                 return importedEmployees;
@@ -64,9 +70,38 @@
             }
         },
         methods: {
-            emitFilter(criteria, option) {
-                bus.$emit(this.busEvent, criteria, option);
+            applyFilter(criteria, option) {
+                this.appliedFilters[criteria] = option;
+                this.visibleSales = this.applyFilterLogic(this.appliedFilters, this.data);
+                bus.$emit(this.busEvent, this.visibleSales);
+            },
+            applyFilterLogic(filtersObject, sales) {
+                let localSales = [...sales];
+                for (let key in filtersObject) {
+                    if (key === "YEAR" && typeof filtersObject["YEAR"] !== "undefined") {
+                        localSales = localSales.filter(sale => new Date(sale.dateTime).getFullYear() === filtersObject[key]);
+                    }
+                    if (key === "DATE_RANGE1" && typeof filtersObject["DATE_RANGE1"] !== "undefined") {
+                        let monthNumberJS = SalesService.getMonthNumberJS(filtersObject[key]);
+                        localSales = localSales.filter(sale => new Date(sale.dateTime).getMonth() >= monthNumberJS);
+                    }
+                    if (key === "DATE_RANGE2" && typeof filtersObject["DATE_RANGE2"] !== "undefined") {
+                        let monthNumberJS = SalesService.getMonthNumberJS(filtersObject[key]);
+                        localSales = localSales.filter(sale => new Date(sale.dateTime).getMonth() <= monthNumberJS);
+                    }
+                    if (key === "EMPLOYEE" && typeof filtersObject["EMPLOYEE"] !== "undefined") {
+                        localSales = localSales.filter(sale => sale.employeeID === filtersObject[key].id);
+                    }
+                    if (key === "CLIENT" && typeof filtersObject["CLIENT"] !== "undefined") {
+                        localSales = localSales.filter(sale => sale.clientID === filtersObject[key].id);
+                    }
+                }
+
+                return localSales;
             }
+        },
+        mounted() {
+            this.visibleSales = this.data;
         }
     });
 </script>
