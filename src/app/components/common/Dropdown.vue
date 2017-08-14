@@ -56,7 +56,7 @@
                 this.$emit("selectedOption", this.selectedOption);
             }
         },
-        mounted: function () {
+        mounted() {
             let _this = this;
             document.body.addEventListener('click', function (ev) {
                 let touchedElement = $(ev.target);

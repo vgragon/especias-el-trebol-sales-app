@@ -45,7 +45,7 @@
                 $(`#${this.id}`).data("DateTimePicker").toggle();
             }
         },
-        mounted: function () {
+        mounted() {
             let datePicker = $(`#${this.id}`);
             datePicker.datetimepicker({
                 format: "DD/MMM/YYYY",
