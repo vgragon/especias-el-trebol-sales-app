@@ -13,15 +13,33 @@
 
     export default Vue.component("t-date-picker", {
         props: ['id', 'isDisabled', 'busEvent', 'linkedId', 'placeholder'],
+        data() {
+            return {
+                lastDate: undefined
+            }
+        },
         methods: {
             emitSelectedDate: function (ev) {
-                if (typeof this.linkedId !== "undefined") {
+                let isIncomingDateValid = ev.date !== false;
+                let isLastDateValid = typeof this.lastDate !== "undefined";
+                let isIncomingDateSameAsLastDate = isIncomingDateValid && isLastDateValid && ev.date.toISOString() === this.lastDate.toISOString();
+                if (isLastDateValid && !isIncomingDateSameAsLastDate) {
+                    this.lastDate = ev.date;
                     let linkedDataPicker = $(`#${this.linkedId}`);
-                    let datePicker = $(`#${this.id}`);
-                    linkedDataPicker.data("DateTimePicker").minDate(ev.date);
-                    if (datePicker.val() > linkedDataPicker.val()) linkedDataPicker.val(datePicker.val());
+                    let isLinkedDatePickerDefined = linkedDataPicker.length > 0;
+                    if (isLinkedDatePickerDefined) {
+                        let datePicker = $(`#${this.id}`);
+                        linkedDataPicker.data("DateTimePicker").minDate(ev.date);
+                        if (datePicker.val() > linkedDataPicker.val()) linkedDataPicker.val(datePicker.val());
+                    }
                 }
-                this.$emit("selectedOption", ev.date.startOf('day').toDate());
+
+                if (isIncomingDateValid) {
+                    this.$emit("selectedOption", ev.date.startOf('day').toDate());
+                }
+                else {
+                    this.$emit("selectedOption", undefined);
+                }
             },
             toggleDatePicker: function () {
                 $(`#${this.id}`).data("DateTimePicker").toggle();
