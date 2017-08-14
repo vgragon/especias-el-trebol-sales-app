@@ -4,6 +4,7 @@
 $bootstrap-sass-asset-helper: false;
 $icon-font-path: '../../node_modules/bootstrap-sass/assets/fonts/bootstrap/';
 @import '../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap';
+@import '../../node_modules/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css';
 
 html {
   color: $black;
@@ -60,7 +61,7 @@ a {
   }
 }
 
-.t-input--text {
+.t-input--text, .t-input--date, .t-textarea {
   background-color: $grey;
   border: none;
   height: 34px;
@@ -72,6 +73,22 @@ a {
   &::placeholder {
     font-style: italic;
   }
+}
+
+.t-textarea {
+  height: 112px;
+}
+
+.t-input--date {
+  cursor: pointer;
+}
+
+.t-separator--big--horizontal {
+  margin-top: $spacing-sm;
+  margin-bottom: $spacing-sm;
+  display: inline-block;
+  width: 100%;
+  border-bottom: 1px solid $grey;
 }
 
 .t-person {
@@ -113,4 +130,37 @@ a {
   position: absolute;
   bottom: 10px;
   right: 10px;
+}
+
+.t-mode {
+  position: relative;
+  width: 120px;
+  background-color: $grey;
+  cursor: pointer;
+
+  .t-mode__option {
+    width: 48%;
+    text-align: center;
+    display: inline-block;
+
+    &.t-mode__option--enabled {
+      color: $white;
+      background-color: $green;
+    }
+  }
+}
+
+.t-button {
+  width: 90px;
+  color: $white;
+  border: none;
+  padding: $spacing-xs;
+
+  &.t-button--primary {
+    background-color: $green;
+
+    &:hover {
+      background-color: darken($green, 5);
+    }
+  }
 }

@@ -6,15 +6,21 @@
                     <div class="t-person margin--bottom--sm">
                         <div class="t-person__info">
                             <div class="t-person__info__name">
-                                <span>{{person.givenName}}</span>
-                                <span>{{person.familyName}}</span>
+                                <router-link :to="{ name: 'EmployeeDetail', params: { id: person.id }}">
+                                    <span>{{person.givenName}}</span>
+                                    <span>{{person.familyName}}</span>
+                                </router-link>
                             </div>
                             <div class="t-person__action">
-                                <a class="t-link">See detail</a>
+                                <router-link :to="{ name: 'EmployeeDetail', params: { id: person.id }}">
+                                    <a class="t-link">See detail</a>
+                                </router-link>
                             </div>
                         </div>
-                        <div class="t-person__image"
-                             :style="{'background-image': 'url(' + (person.image || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSf2u0RWmYALKJ431XNoTKjzu77ERLBIvXKlOEA-Q3DPo2h2rCB') + ')'}"></div>
+                        <router-link :to="{ name: 'EmployeeDetail', params: { id: person.id }}">
+                            <div class="t-person__image"
+                                 :style="{'background-image': 'url(' + (person.image || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSf2u0RWmYALKJ431XNoTKjzu77ERLBIvXKlOEA-Q3DPo2h2rCB') + ')'}"></div>
+                        </router-link>
                     </div>
                 </div>
             </div>
@@ -29,7 +35,3 @@
         props: ['data']
     });
 </script>
-
-<style lang="scss">
-
-</style>

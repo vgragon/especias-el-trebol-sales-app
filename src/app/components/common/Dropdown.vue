@@ -1,5 +1,5 @@
 <template>
-    <div class="t-dropdown" @click="toggleVisibility">
+    <div class="t-dropdown" :class="{'state--disabled': isDisabled}" @click="toggleVisibility">
         <div class="t-dropdown__main">
             <span :class="{'t-dropdown__placeholder': !selectedOption}">{{getDisplayText(selectedOption, displayProperty) || placeholder || 'Select'}}</span>
         </div>
@@ -7,7 +7,9 @@
             <i class="glyphicon glyphicon-chevron-down"></i>
         </div>
         <div class="t-dropdown__options background--grey" :class="{'visibility--hidden': !isVisible}">
-            <div class="t-dropdown__option t-dropdown__option--clean" @click="cleanSelection">Clean selection</div>
+            <div class="t-dropdown__option t-dropdown__option--clean" @click="cleanSelection"
+                 v-if="cleanSelectionEnabled">Clean selection
+            </div>
             <div class="t-dropdown__option" v-for="option in data" @click="selectOption(option)">
                 <span>{{getDisplayText(option, displayProperty)}}</span></div>
         </div>
@@ -19,7 +21,7 @@
     import $ from 'jquery';
 
     export default Vue.component("t-dropdown", {
-        props: ['data', 'placeholder', 'displayProperty', 'predefinedValue'],
+        props: ['data', 'placeholder', 'displayProperty', 'predefinedValue', 'cleanSelectionEnabled', 'isDisabled'],
         data() {
             return {
                 selectedOption: this.predefinedValue,
@@ -47,7 +49,7 @@
                 return text;
             },
             toggleVisibility: function () {
-                this.isVisible = !this.isVisible;
+                this.isVisible = !this.isVisible && !this.isDisabled;
             },
             selectOption: function (option) {
                 this.selectedOption = option;
@@ -81,6 +83,11 @@
         padding: 8px;
         min-width: 90px;
         max-width: 318px;
+
+        &.state--disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
 
         .t-dropdown__placeholder {
             font-style: italic;

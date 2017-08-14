@@ -2,15 +2,21 @@
   {
     "id": "0",
     "name": "Pueblo Bonito",
-    "telephoneNumber": "8117100358",
-    "email": "pueblo.bonito@emeraldbay.com",
-    "address": "Emerald Bay Somewhere"
+    "alias": "Pueblo Bonito",
+    "primaryTelephoneNumber": "8117100358",
+    "secondaryTelephoneNumber": "237430358",
+    "primaryEmail": "pueblo.bonito@emeraldbay.com",
+    "secondaryEmail": "pueblo.bonito@emeraldbay.com",
+    "workAddress": "Emerald Bay Somewhere"
   },
   {
     "id": "1",
     "name": "Operadora Polar",
-    "telephoneNumber": "811729298",
-    "email": "operadora.polar@op.com",
-    "address": "Carretera Nacional S/N"
+    "alias": "OPPO",
+    "primaryTelephoneNumber": "811729298",
+    "secondaryTelephoneNumber": "21094323",
+    "primaryEmail": "operadora.polar@op.com",
+    "secondaryEmail": "operadora.polar@op.com",
+    "workAddress": "Carretera Nacional S/N"
   }
 ]

@@ -6,14 +6,20 @@
                     <div class="t-person margin--bottom--sm">
                         <div class="t-person__info">
                             <div class="t-person__info__name">
-                                <span>{{person.name}}</span>
+                                <router-link :to="{ name: 'ClientDetail', params: { id: person.id }}">
+                                    <span>{{person.name}}</span>
+                                </router-link>
                             </div>
                             <div class="t-person__action">
-                                <a class="t-link">See detail</a>
+                                <router-link :to="{ name: 'ClientDetail', params: { id: person.id }}">
+                                    <a class="t-link">See detail</a>
+                                </router-link>
                             </div>
                         </div>
-                        <div class="t-person__image"
-                             :style="{'background-image': 'url(' + (person.image || 'http://cdn.onlinewebfonts.com/svg/img_242128.svg') + ')'}"></div>
+                        <router-link :to="{ name: 'ClientDetail', params: { id: person.id }}">
+                            <div class="t-person__image"
+                                 :style="{'background-image': 'url(' + (person.image || 'http://cdn.onlinewebfonts.com/svg/img_242128.svg') + ')'}"></div>
+                        </router-link>
                     </div>
                 </div>
             </div>

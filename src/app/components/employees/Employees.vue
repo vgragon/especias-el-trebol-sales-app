@@ -4,7 +4,9 @@
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                 <div class="t-section__header margin--bottom--sm">
                     <h1 class="heading--h1 inline-block">Employee catalog</h1>
-                    <div class="pull-right"><a class="t-link">Add employee</a></div>
+                    <div class="pull-right">
+                        <a href="#" class="t-link">Add employee</a>
+                    </div>
                     <div class="clearfix"></div>
                 </div>
                 <div class="t-section__filter margin--bottom--lg">
