@@ -4,7 +4,7 @@
             <div class="t-navigation-container">
                 <t-navigation></t-navigation>
             </div>
-            <main class="t-main-container uk-grid padding--all--lg">
+            <main class="t-main-container padding--all--lg">
                 <router-view></router-view>
             </main>
         </div>

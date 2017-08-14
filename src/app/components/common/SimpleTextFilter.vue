@@ -5,13 +5,9 @@
 
 <script>
     import Vue from 'vue';
-    import $ from 'jquery';
 
     export default Vue.component("simple-text-filter", {
         props: ['data', 'propertyName', 'placeholder'],
-        data() {
-            return {}
-        },
         methods: {
             handleKeyUp(ev) {
                 let value = ev.target.value;
@@ -27,7 +23,3 @@
         }
     });
 </script>
-
-<style lang="scss">
-
-</style>

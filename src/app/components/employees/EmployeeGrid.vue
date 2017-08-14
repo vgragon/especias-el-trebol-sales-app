@@ -2,8 +2,8 @@
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4" v-for="person in data">
-                    <div class="t-person">
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4" v-for="person in data">
+                    <div class="t-person margin--bottom--sm">
                         <div class="t-person__info">
                             <div class="t-person__info__name">
                                 <span>{{person.givenName}}</span>

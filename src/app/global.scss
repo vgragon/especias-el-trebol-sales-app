@@ -63,6 +63,7 @@ a {
 .t-input--text {
   background-color: $grey;
   border: none;
+  height: 34px;
   font-size: $font-size--normal;
   padding: $spacing-sm;
   display: block;
@@ -95,7 +96,7 @@ a {
 }
 
 .t-person__info {
-  width: 80%;
+  width: 85%;
   height: 100%;
   background-color: #F0F0F0;
   position: absolute;
