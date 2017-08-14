@@ -78,11 +78,10 @@
         display: inline-block;
         vertical-align: top;
         background-color: $grey;
-        width: 20%;
         height: 34px;
         padding: 8px;
         min-width: 90px;
-        max-width: 318px;
+        width: 222px;
 
         &.state--disabled {
             opacity: 0.5;
