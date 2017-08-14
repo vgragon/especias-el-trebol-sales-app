@@ -78,7 +78,7 @@
                         this.sale.clientID = option.id;
                         break;
                     case "DATE":
-                        this.sale.dateTime = option.startOf("day").toISOString();
+                        this.sale.dateTime = option.toISOString();
                         break;
                 }
             }

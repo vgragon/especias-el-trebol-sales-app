@@ -89,8 +89,6 @@
 
 <script>
     import Vue from 'vue';
-    const importedEmployees = require('../../../../data/employees.json');
-    const importedClients = require('../../../../data/clients.json');
 
     export default Vue.component("t-employee-create", {
         data() {
@@ -98,21 +96,7 @@
                 employee: {}
             }
         },
-        methods: {
-            receiveSelectedOption(criteria, option) {
-                switch (criteria) {
-                    case "EMPLOYEE":
-                        this.sale.employeeID = option.id;
-                        break;
-                    case "CLIENT":
-                        this.sale.clientID = option.id;
-                        break;
-                    case "DATE":
-                        this.sale.dateTime = option.startOf("day").toISOString();
-                        break;
-                }
-            }
-        }
+        methods: {}
     });
 </script>
 
