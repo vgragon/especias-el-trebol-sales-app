@@ -1,5 +1,5 @@
 <template>
-    <div class="t-employee-detail" v-if="person">
+    <div class="t-person-detail" v-if="person">
         <div class="pull-right">
             <label>Edit mode</label>
             <div class="t-mode t-mode--edit">
@@ -13,15 +13,15 @@
                 </div>
             </div>
         </div>
-        <div class="t-employee-detail__image"
+        <div class="t-person-detail__image"
              :style="{'background-image': 'url(' + (person.image || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSf2u0RWmYALKJ431XNoTKjzu77ERLBIvXKlOEA-Q3DPo2h2rCB') + ')'}"></div>
-        <div class="t-employee-detail__alias margin--top--sm margin--bottom--lg font-size--md">
+        <div class="t-person-detail__alias margin--top--sm margin--bottom--lg font-size--md">
             <span v-if="!isEditModeEnabled">{{person.alias}}</span>
             <input type="text" class="t-input--text font-size--md" title="Alias"
                    v-if="isEditModeEnabled" :value="person.alias"/>
         </div>
-        <div class="t-employee-detail__info margin--bottom--md">
-            <div class="t-employee-detail__info__name margin--bottom--md">
+        <div class="t-person-detail__info margin--bottom--md">
+            <div class="t-person-detail__info__name margin--bottom--md">
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                         <label>Given name</label>
@@ -35,7 +35,7 @@
                     </div>
                 </div>
             </div>
-            <div class="t-employee-detail__info__phone margin--bottom--md">
+            <div class="t-person-detail__info__phone margin--bottom--md">
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                         <label>Telephone number</label>
@@ -51,7 +51,7 @@
                     </div>
                 </div>
             </div>
-            <div class="t-employee-detail__info__email margin--bottom--md">
+            <div class="t-person-detail__info__email margin--bottom--md">
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                         <label>Primary email</label>
@@ -67,12 +67,12 @@
                     </div>
                 </div>
             </div>
-            <div class="t-employee-detail__info__address margin--bottom--md">
+            <div class="t-person-detail__info__address margin--bottom--md">
                 <label>Address</label>
                 <input type="text" class="t-input--text" title="Address" :readonly="!isEditModeEnabled"
                        :value="person.homeAddress"/>
             </div>
-            <div class="t-employee-detail__info__notes">
+            <div class="t-person-detail__info__notes">
                 <label>Notes</label>
                 <textarea class="t-textarea" title="Notes" :readonly="!isEditModeEnabled"
                           :value="person.notes"></textarea>
@@ -103,34 +103,3 @@
         }
     });
 </script>
-
-<style lang="scss">
-    .t-employee-detail__image {
-        width: 170px;
-        height: 170px;
-        background-color: #fff;
-        background-size: cover;
-        background-repeat: no-repeat;
-        border-radius: 100%;
-        margin: auto;
-    }
-
-    .t-employee-detail__alias {
-        font-weight: bold;
-        text-align: center;
-        height: 34px;
-
-        span {
-            display: inline-block;
-            height: 100%;
-            padding: 3px;
-            min-width: 200px;
-        }
-
-        .t-input--text {
-            text-align: center;
-            display: inline-block;
-            min-width: 200px;
-        }
-    }
-</style>

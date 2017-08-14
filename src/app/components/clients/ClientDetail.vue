@@ -94,34 +94,3 @@
         }
     });
 </script>
-
-<style lang="scss">
-    .t-person-detail__image {
-        width: 170px;
-        height: 170px;
-        background-color: #fff;
-        background-size: cover;
-        background-repeat: no-repeat;
-        border-radius: 100%;
-        margin: auto;
-    }
-
-    .t-person-detail__alias {
-        font-weight: bold;
-        text-align: center;
-        height: 34px;
-
-        span {
-            display: inline-block;
-            height: 100%;
-            padding: 3px;
-            min-width: 200px;
-        }
-
-        .t-input--text {
-            text-align: center;
-            display: inline-block;
-            min-width: 200px;
-        }
-    }
-</style>
