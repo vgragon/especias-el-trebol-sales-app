@@ -1,6 +1,7 @@
 <template>
     <div class="t-employee-detail" v-if="person">
         <div class="pull-right">
+            <label>Edit mode</label>
             <div class="t-mode t-mode--edit">
                 <div class="t-mode__option" :class="{'t-mode__option--enabled': isEditModeEnabled}"
                      @click="isEditModeEnabled = true">
