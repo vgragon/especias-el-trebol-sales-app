@@ -5,14 +5,16 @@
                 {{getTimeValue("MONTH", section.dateTime)}}, {{getTimeValue("YEAR", section.dateTime)}}
             </div>
             <div class="t-grid__section__content">
-                <div class="t-grid__section__element" v-for="sale in section.records">
-                    <div class="t-grid__element__title">
-                        {{getTimeValue("FRIENDLY_DAY", sale.dateTime)}} {{getTimeValue("DAY", sale.dateTime)}}
-                    </div>
-                    <div class="t-grid__element__content"
-                         :class="{'t-number--positive': sale.amount > 0, 't-number--negative': sale.amount < 0}">
-                        {{formatNumber('CURRENCY', sale.amount)}}
-                    </div>
+                <div class="t-grid__section__element" v-for="sale in section.dailyRecords">
+                    <router-link :to="{ name: 'SalesDetail', params: { dateTime: sale.dateTime }}">
+                        <div class="t-grid__element__title">
+                            {{getTimeValue("FRIENDLY_DAY", sale.dateTime)}} {{getTimeValue("DAY", sale.dateTime)}}
+                        </div>
+                        <div class="t-grid__element__content"
+                             :class="{'t-number--positive': sale.sumAmount > 0, 't-number--negative': sale.sumAmount < 0}">
+                            {{formatNumber('CURRENCY', sale.sumAmount)}}
+                        </div>
+                    </router-link>
                 </div>
             </div>
         </div>
@@ -62,6 +64,7 @@
         }
 
         .t-grid__element__title {
+            color: #000;
             font-weight: bold;
         }
 
@@ -73,6 +76,11 @@
             margin: 12px 12px 12px 0;
             padding: 12px;
             text-align: center;
+
+            &:hover {
+                background-color: #e8e6e6;
+                cursor: pointer;
+            }
         }
 
         .t-grid__element__content {

@@ -19,7 +19,7 @@ const routes = [
         component: SalesSummary
     },
     {
-        path: '/sales/:id',
+        path: '/sales/:dateTime',
         name: 'SalesDetail',
         component: SalesDetail
     },

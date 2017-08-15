@@ -55,26 +55,44 @@
                         let recordDateMonthNumber = recordDate.getMonth();
                         let recordDateYearNumber = recordDate.getFullYear();
                         return salesGroupDateMonthNumber === recordDateMonthNumber && salesGroupDateYearNumber === recordDateYearNumber;
+                    case "DAY":
+                        return salesGroupDate.toISOString() === recordDate.toISOString();
                 }
             },
             groupSales(records) {
-                let recordsClone = [...records];
-                let groupedSales = [];
-                let foundSalesGroup;
+                let recordsArrayClone = [...records];
+                let groupedMonthlySales = [];
+                let foundMonthlySalesGroup;
+                let foundDailySalesGroup;
 
-                for (let salesRecord of recordsClone) {
-                    foundSalesGroup = groupedSales.find(this.findSalesGroupBy.bind(this, "MONTH_YEAR", salesRecord));
-                    if (!foundSalesGroup) {
-                        groupedSales.push({
+                for (let salesRecord of recordsArrayClone) {
+                    foundMonthlySalesGroup = groupedMonthlySales.find(this.findSalesGroupBy.bind(this, "MONTH_YEAR", salesRecord));
+                    if (typeof foundMonthlySalesGroup === "undefined") {
+                        groupedMonthlySales.push({
                             dateTime: salesRecord.dateTime,
-                            records: [salesRecord]
+                            dailyRecords: [{
+                                dateTime: salesRecord.dateTime,
+                                sumAmount: salesRecord.amount,
+                                records: [salesRecord]
+                            }]
                         });
                     } else {
-                        foundSalesGroup.records.push(salesRecord);
+                        foundDailySalesGroup = foundMonthlySalesGroup.dailyRecords.find(this.findSalesGroupBy.bind(this, "DAY", salesRecord));
+                        if (typeof foundDailySalesGroup === "undefined") {
+                            foundMonthlySalesGroup.dailyRecords.push({
+                                dateTime: salesRecord.dateTime,
+                                sumAmount: salesRecord.amount,
+                                records: [salesRecord]
+                            });
+                        }
+                        else {
+                            foundDailySalesGroup.sumAmount += salesRecord.amount;
+                            foundDailySalesGroup.records.push(salesRecord);
+                        }
                     }
                 }
 
-                return groupedSales;
+                return groupedMonthlySales;
             },
             applySalesGrouping(data) {
                 this.groupedSales = this.groupSales(data);
