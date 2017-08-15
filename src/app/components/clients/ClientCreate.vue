@@ -16,10 +16,16 @@
                     <form class="t-form--create--employee">
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="align-center margin--bottom--lg">
+                                        <t-image-select :id="'t-client-image--new'"
+                                                        @imageSelect="receiveSelectedImage($event)"></t-image-select>
+                                    </div>
+                                </div>
                                 <div class="form-group margin--bottom--md">
                                     <label class="margin--bottom--xs">Company name</label><sup
                                         class="t-indicator t-indicator--mandatory">*</sup>
-                                    <input type="text" class="t-input--text"
+                                    <input type="text" class="t-input--text" title="Client name"
                                            @change="client.name = $event.target.value"/>
                                 </div>
                             </div>
@@ -88,7 +94,13 @@
                 client: {}
             }
         },
-        methods: {}
+        methods: {
+            receiveSelectedImage(base64) {
+                if (typeof base64 !== "undefined") {
+                    this.client.image = base64;
+                }
+            }
+        }
     });
 </script>
 
