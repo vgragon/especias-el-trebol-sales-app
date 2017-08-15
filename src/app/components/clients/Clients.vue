@@ -2,7 +2,7 @@
     <section class="t-section">
         <t-client-create></t-client-create>
         <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
                 <div class="t-section__header margin--bottom--sm">
                     <h1 class="heading--h1 inline-block">Client catalog</h1>
                     <div class="pull-right">

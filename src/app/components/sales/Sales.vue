@@ -2,7 +2,7 @@
     <section class="t-section">
         <t-sales-create></t-sales-create>
         <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
                 <div class="t-section__header margin--bottom--sm">
                     <h1 class="heading--h1 inline-block">Sales summary</h1>
                     <div class="pull-right">
@@ -10,9 +10,17 @@
                     </div>
                 </div>
             </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+                        <t-sales-filters :data="sales" :busEvent="'salesFilterSelected'" v-if="!isLoading"></t-sales-filters>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <t-sales-grid :data="groupedSales"></t-sales-grid>
+                    </div>
+                </div>
+            </div>
         </div>
-        <t-sales-filters :data="sales" :busEvent="'salesFilterSelected'" v-if="!isLoading"></t-sales-filters>
-        <t-sales-grid :data="groupedSales"></t-sales-grid>
     </section>
 </template>
 
