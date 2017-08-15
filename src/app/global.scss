@@ -5,6 +5,7 @@ $bootstrap-sass-asset-helper: false;
 $icon-font-path: '../../node_modules/bootstrap-sass/assets/fonts/bootstrap/';
 @import '../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap';
 @import '../../node_modules/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css';
+@import '../../node_modules/cropperjs/dist/cropper.min.css';
 
 html {
   color: $black;

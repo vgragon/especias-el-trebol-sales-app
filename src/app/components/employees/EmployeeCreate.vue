@@ -15,6 +15,15 @@
                     <div class="clearfix"></div>
                     <form class="t-form--create--employee">
                         <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="align-center margin--bottom--lg">
+                                    <input type="file" id="t-person__image-input" class="t-input--file"
+                                           style="display: none;"/>
+                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSf2u0RWmYALKJ431XNoTKjzu77ERLBIvXKlOEA-Q3DPo2h2rCB"
+                                         id="t-person__image--form" class="t-person__image--form margin--bottom--sm"/>
+                                    <a class="t-link" @click="toggleImageSelection">Change image</a>
+                                </div>
+                            </div>
                             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                 <div class="form-group margin--bottom--md">
                                     <label class="margin--bottom--xs">Given name</label><sup
@@ -89,18 +98,52 @@
 
 <script>
     import Vue from 'vue';
+    import Cropper from 'cropperjs';
 
     export default Vue.component("t-employee-create", {
         data() {
             return {
-                employee: {}
+                employee: {},
+                imageElement: undefined,
+                cropper: undefined
             }
         },
-        methods: {}
+        methods: {
+            toggleImageSelection() {
+                $("#t-person__image-input").click();
+            },
+            handleFileSelect(ev) {
+                let file = ev.target.files[0];
+                if (!!file) {
+                    this.imageElement = document.getElementById("t-person__image--form");
+                    this.getBase64(file).then((base64) => {
+                        this.employee.image = base64;
+                        this.imageElement.src = base64;
+                    });
+                }
+            },
+            getBase64(file) {
+                return new Promise(function (resolve, reject) {
+                    let reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = function () {
+                        resolve(reader.result);
+                    };
+                    reader.onerror = function (error) {
+                        reject(error);
+                    };
+                });
+            }
+        },
+        mounted() {
+            document.getElementById('t-person__image-input').addEventListener('change', this.handleFileSelect, false);
+        }
     });
 </script>
 
 <style lang="scss">
+    @import '../../variables';
+
     #t-employee-create {
         .modal-header {
             border-bottom: none;
@@ -112,6 +155,17 @@
 
         .t-input--text {
             width: 100%;
+        }
+
+        .t-person__image--form {
+            max-width: 100%;
+            position: relative;
+            width: 170px;
+            height: 170px;
+            border-radius: 100%;
+            display: block;
+            margin: auto;
+            border: 8px solid #F0F0F0;
         }
     }
 </style>
