@@ -2,22 +2,36 @@
     <div class="t-sales-filters margin--bottom--sm">
         <h2 class="heading--h2">Filter by</h2>
         <div class="t-filter padding--top--sm padding--bottom--sm">
-            <label class="align--bottom margin--right--sm">Date</label>
-            <t-date-picker :id="'DATE_1'" :linkedId="'DATE_2'" class="margin--right--sm" :placeholder="'Select date'"
-                           @selectedOption="receiveSelectedOption('DATE_RANGE_1', $event)"></t-date-picker>
-            <t-date-picker :id="'DATE_2'" :placeholder="'Select date (range)'"
-                           @selectedOption="receiveSelectedOption('DATE_RANGE_2', $event)"></t-date-picker>
+            <div class="row">
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                    <label class="align--bottom margin--right--sm">Date</label>
+                </div>
+                <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+
+                    <t-date-picker :id="'DATE_1'" :linkedId="'DATE_2'" class="margin--right--sm margin--bottom--sm"
+                                   :placeholder="'Select date'"
+                                   @selectedOption="receiveSelectedOption('DATE_RANGE_1', $event)"></t-date-picker>
+                    <t-date-picker :id="'DATE_2'" :placeholder="'Select date (range)'"
+                                   @selectedOption="receiveSelectedOption('DATE_RANGE_2', $event)"></t-date-picker>
+                </div>
+            </div>
         </div>
         <span class="t-separator--big--horizontal"></span>
         <div class="t-filter padding--top--sm padding--bottom--sm">
-            <label class="align--bottom margin--right--sm">Person</label>
-            <t-dropdown :placeholder="'Select employee'" :data="employees"
-                        :displayProperty="['givenName', 'familyName']" class="margin--right--sm"
-                        @selectedOption="receiveSelectedOption('EMPLOYEE', $event)"
-                        :cleanSelectionEnabled="true"></t-dropdown>
-            <t-dropdown :placeholder="'Select client'" :data="clients" :displayProperty="'name'"
-                        @selectedOption="receiveSelectedOption('CLIENT', $event)"
-                        :cleanSelectionEnabled="true"></t-dropdown>
+            <div class="row">
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                    <label class="align--bottom margin--right--sm">Person</label>
+                </div>
+                <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                    <t-dropdown :placeholder="'Select employee'" :data="employees"
+                                :displayProperty="['givenName', 'familyName']" class="margin--right--sm margin--bottom--sm"
+                                @selectedOption="receiveSelectedOption('EMPLOYEE', $event)"
+                                :cleanSelectionEnabled="true"></t-dropdown>
+                    <t-dropdown :placeholder="'Select client'" :data="clients" :displayProperty="'name'"
+                                @selectedOption="receiveSelectedOption('CLIENT', $event)"
+                                :cleanSelectionEnabled="true"></t-dropdown>
+                </div>
+            </div>
         </div>
     </div>
 </template>

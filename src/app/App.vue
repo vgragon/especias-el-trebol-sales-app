@@ -4,7 +4,7 @@
             <div class="t-navigation-container">
                 <t-navigation></t-navigation>
             </div>
-            <main class="t-main-container padding--all--lg">
+            <main class="t-main-container container padding--all--lg">
                 <router-view></router-view>
             </main>
         </div>
@@ -25,4 +25,9 @@
 
 <style lang="scss">
     @import './global';
+
+    .t-navigation-container {
+        width: 100%;
+        height: 60px;
+    }
 </style>

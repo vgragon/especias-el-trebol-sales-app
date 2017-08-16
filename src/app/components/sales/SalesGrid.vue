@@ -70,8 +70,7 @@
 
         .t-grid__section__element {
             display: inline-block;
-            max-width: 150px;
-            width: 10%;
+            width: 120px;
             background-color: #f0f0f0;
             margin: 12px 12px 12px 0;
             padding: 12px;
