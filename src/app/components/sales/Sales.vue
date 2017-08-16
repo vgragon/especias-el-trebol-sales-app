@@ -49,7 +49,7 @@
         ],
         data() {
             return {
-                activeView: "TIMELINE",
+                activeView: "CONDENSED",
                 isLoading: false,
                 visibleSales: [],
                 sales: [],
