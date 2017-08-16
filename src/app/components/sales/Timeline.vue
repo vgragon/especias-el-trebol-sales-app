@@ -14,20 +14,22 @@
         data() {
             return {
                 canvas: undefined,
-                margin: {top: 20, right: 20, bottom: 200, left: 50},
+                margin: {top: 20, right: 20, bottom: 30, left: 50},
                 width: 0,
                 height: 0,
                 path: undefined,
-                group: undefined
+                group: undefined,
+                xAxis: undefined,
+                yAxis: undefined
             }
         },
         watch: {
             data: function (value) {
                 let dataFeed = this.prepareData(value);
                 let axis = this.setTimelineAxis(dataFeed);
-                let line = this.setLine(axis);
-                this.drawAxis(this.group, axis);
-                this.updateTimeline(dataFeed, line);
+                let lineSetter = this.setLine(axis);
+                this.updateAxis(axis, this.xAxis, this.yAxis);
+                this.drawTimeline(this.group, dataFeed, lineSetter, this.path);
             }
         },
         methods: {
@@ -45,7 +47,7 @@
                     .range([0, this.width]);
 
                 let y = d3.scaleLinear()
-                    .domain([0, d3.max(data, d => d.amount)])
+                    .domain([d3.min(data, d => d.amount), d3.max(data, d => d.amount)])
                     .range([this.height, 0]);
 
                 return {x, y};
@@ -60,6 +62,7 @@
                 return svg.attr("width", this.width + this.margin.left + this.margin.right)
                     .attr("height", this.height + this.margin.top + this.margin.bottom)
                     .append("g")
+                    .attr("class", `${this.id}__canvas__group`)
                     .attr("transform",
                         "translate(" + this.margin.left + "," + this.margin.top + ")");
             },
@@ -67,43 +70,64 @@
                 let {x, y} = axis;
 
                 // Add the X Axis
-                let ticks = g.append("g")
-                    .attr("transform", "translate(0," + this.height + ")")
-                    .call(d3.axisBottom(x).tickFormat(d3.timeFormat("%b, %Y")).ticks(6));
+                this.yAxis = g.append("g")
+                    .attr("transform", "translate(0," + this.height + ")");
 
-                ticks.selectAll("text").attr("font-size", "14px");
+                let ticks = this.yAxis.call(d3.axisBottom(x).tickFormat(d3.timeFormat("%b, %Y")).ticks(6));
 
                 // Add the Y Axis
-                ticks = g.append("g")
-                    .call(d3.axisLeft(y).ticks(4));
+                this.xAxis = g.append("g");
 
-                ticks.selectAll("text").attr("font-size", "14px");
+                this.xAxis.call(d3.axisLeft(y).ticks(4));
+
+                d3.selectAll("text").attr("font-size", "14px");
             },
-            drawTimeline: function (group, data = [], line) {
-                this.path = group.append("path")
-                    .data([data])
-                    .attr("class", "line")
-                    .attr("d", line);
-            },
-            updateTimeline: function (data = [], line) {
-                if (data.length > 0) {
-                    this.path.data([data])
+            drawTimeline: function (group, data = [], lineSetter, path) {
+                if (typeof path !== "undefined") {
+                    path.transition(this.transition)
+                        .attr("d", lineSetter(data))
+                        .attr("stroke", this.defineLineColor);
+                }
+                else {
+                    this.path = group.append("path")
                         .attr("class", "line")
-                        .attr("d", line);
+                        .attr("d", lineSetter(data))
+                        .attr("stroke", this.defineLineColor);
+                }
+            },
+            updateAxis: function (newAxis, previousX, previousY) {
+                previousX.transition(this.transition).call(d3.axisLeft(newAxis.y).ticks(4));
+                previousY.transition(this.transition).call(d3.axisBottom(newAxis.x).tickFormat(d3.timeFormat("%b, %Y")).ticks(6));
+                d3.selectAll("text").attr("font-size", "14px");
+            },
+            setTransitions: function () {
+                this.transition = d3.transition()
+                    .duration(750)
+                    .ease(d3.easeLinear);
+            },
+            defineLineColor: function (data) {
+                switch (true) {
+                    case data === 0:
+                        return "#000";
+                    case data > 0:
+                        return "steelblue";
+                    case data < 0:
+                        return "#DF3939";
                 }
             }
         },
         mounted() {
-            let mainContainer = d3.select(`#${this.id}`).style("height", "500px");
+            let mainContainer = d3.select(`#${this.id}`).style("height", "350px");
             this.width = SalesService.getPixelsNumber(mainContainer.style("width")) - this.margin.left - this.margin.right;
             this.height = SalesService.getPixelsNumber(mainContainer.style("height")) - this.margin.top - this.margin.bottom;
             this.canvas = this.createSVGContainer(mainContainer);
             let dataFeed = this.prepareData(this.data);
             let axis = this.setTimelineAxis(dataFeed);
-            let line = this.setLine(axis);
+            let lineSetter = this.setLine(axis);
             this.group = this.drawGroup(this.canvas);
             this.drawAxis(this.group, axis);
-            this.drawTimeline(this.group, this.data, line);
+            this.setTransitions();
+            this.drawTimeline(this.group, dataFeed, lineSetter);
         }
     });
 </script>
