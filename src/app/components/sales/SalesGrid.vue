@@ -1,6 +1,6 @@
 <template>
     <div class="t-sales-grid">
-        <div class="t-grid__section" v-for="section in data">
+        <div class="t-grid__section margin--bottom--sm" v-for="section in data">
             <div class="t-grid__section__title">
                 <router-link :to="{ name: 'SalesDetail', params: { dateTime: section.dateTime, criteria: 'MONTH' }}">
                     {{getTimeValue("MONTH", section.dateTime)}}, {{getTimeValue("YEAR", section.dateTime)}}

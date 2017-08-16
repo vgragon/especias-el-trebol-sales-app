@@ -19,7 +19,8 @@
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         <t-sales-grid :data="groupedSales" v-if="activeView === 'CONDENSED'"></t-sales-grid>
-                        <t-timeline :data="groupedSales" v-if="activeView === 'TIMELINE'"></t-timeline>
+                        <t-timeline :id="'t-sales-timeline'" :data="visibleSales"
+                                    v-if="activeView === 'TIMELINE'"></t-timeline>
                     </div>
                 </div>
             </div>
@@ -48,8 +49,9 @@
         ],
         data() {
             return {
-                activeView: "CONDENSED",
+                activeView: "TIMELINE",
                 isLoading: false,
+                visibleSales: [],
                 sales: [],
                 groupedSales: []
             }
@@ -108,11 +110,13 @@
                 return groupedMonthlySales;
             },
             applySalesGrouping(data) {
+                this.visibleSales = data;
                 this.groupedSales = this.groupSales(data);
             }
         },
         mounted() {
             this.sales = importedSales.sort(SalesService.sortByDate);
+            this.visibleSales = this.sales;
             this.employees = importedEmployees;
             this.groupedSales = this.groupSales(this.sales);
             this.isLoading = false;

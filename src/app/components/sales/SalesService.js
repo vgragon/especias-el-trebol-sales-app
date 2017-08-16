@@ -7,6 +7,14 @@ export default {
             return this.getNaturalMonth(dateTime) + " " + dateTime.getDate() + ", " + dateTime.getFullYear();
         }
     },
+    getPixelsNumber: function (value) {
+        if (typeof value === "undefined") return 0;
+        if (typeof value === "number") return value;
+        if (typeof value === "string") {
+            return value.indexOf("px") >= 0 ? Number.parseInt(value.slice(0, -2)) : Number.parseInt(value);
+        }
+        else return 0;
+    },
     formatNumber: function (criteria, number) {
         if (criteria === "CURRENCY") {
             let numberStringed = (number + "").split("").reverse().join("");
