@@ -13,10 +13,13 @@
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
-                        <t-sales-filters :data="sales" :busEvent="'salesFilterSelected'" v-if="!isLoading"></t-sales-filters>
+                        <t-sales-filters :data="sales" @salesFiltered="applySalesGrouping" v-if="!isLoading"
+                                         :dateEnabled="true" :personEnabled="true" :viewEnabled="true"
+                                         @viewSelect="activeView = $event"></t-sales-filters>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <t-sales-grid :data="groupedSales"></t-sales-grid>
+                        <t-sales-grid :data="groupedSales" v-if="activeView === 'CONDENSED'"></t-sales-grid>
+                        <t-timeline :data="groupedSales" v-if="activeView === 'TIMELINE'"></t-timeline>
                     </div>
                 </div>
             </div>
@@ -28,9 +31,9 @@
     import Vue from 'vue';
     import SalesFilters from './SalesFilters.vue';
     import SalesGrid from './SalesGrid.vue';
+    import Timeline from './Timeline.vue';
     import SalesService from './SalesService.js';
     import SalesCreate from './SalesCreate.vue';
-    import bus from '../../bus.js';
 
     // Test
     let importedSales = require('../../../../data/sales.json');
@@ -40,10 +43,12 @@
         components: [
             SalesFilters,
             SalesGrid,
+            Timeline,
             SalesCreate
         ],
         data() {
             return {
+                activeView: "CONDENSED",
                 isLoading: false,
                 sales: [],
                 groupedSales: []
@@ -111,7 +116,6 @@
             this.employees = importedEmployees;
             this.groupedSales = this.groupSales(this.sales);
             this.isLoading = false;
-            bus.$on('salesFilterSelected', this.applySalesGrouping.bind(this));
         }
     });
 </script>

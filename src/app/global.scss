@@ -149,6 +149,10 @@ a {
   color: $red;
 }
 
+.t-number--neutral {
+  color: $black;
+}
+
 .t-button {
   width: 90px;
   height: 34px;
@@ -205,4 +209,16 @@ a {
 
 .t-indicator--mandatory {
   color: $red;
+}
+
+.modal-content {
+  box-shadow: none;
+  border: none;
+  border-radius: 0;
+}
+
+.t-number--money {
+  &::before {
+    content: "$";
+  }
 }

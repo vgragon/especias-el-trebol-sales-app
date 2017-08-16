@@ -1,13 +1,12 @@
 <template>
     <div class="t-sales-filters margin--bottom--sm">
-        <h2 class="heading--h2">Filter by</h2>
-        <div class="t-filter padding--top--sm padding--bottom--sm">
+        <h2 class="heading--h2" v-if="dateEnabled || personEnabled">Filter by</h2>
+        <div class="t-filter padding--top--sm padding--bottom--sm" v-if="dateEnabled">
             <div class="row">
                 <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
                     <label class="align--bottom margin--right--sm">Date</label>
                 </div>
                 <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-
                     <t-date-picker :id="'DATE_1'" :linkedId="'DATE_2'" class="margin--right--sm margin--bottom--sm"
                                    :placeholder="'Select date'"
                                    @selectedOption="receiveSelectedOption('DATE_RANGE_1', $event)"></t-date-picker>
@@ -16,20 +15,37 @@
                 </div>
             </div>
         </div>
-        <span class="t-separator--big--horizontal"></span>
-        <div class="t-filter padding--top--sm padding--bottom--sm">
+        <span class="t-separator--big--horizontal" v-if="dateEnabled"></span>
+        <div class="t-filter padding--top--sm padding--bottom--sm" v-if="personEnabled">
             <div class="row">
                 <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
                     <label class="align--bottom margin--right--sm">Person</label>
                 </div>
                 <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
                     <t-dropdown :placeholder="'Select employee'" :data="employees"
-                                :displayProperty="['givenName', 'familyName']" class="margin--right--sm margin--bottom--sm"
+                                :displayProperty="['givenName', 'familyName']"
+                                class="margin--right--sm margin--bottom--sm"
                                 @selectedOption="receiveSelectedOption('EMPLOYEE', $event)"
                                 :cleanSelectionEnabled="true"></t-dropdown>
                     <t-dropdown :placeholder="'Select client'" :data="clients" :displayProperty="'name'"
                                 @selectedOption="receiveSelectedOption('CLIENT', $event)"
                                 :cleanSelectionEnabled="true"></t-dropdown>
+                </div>
+            </div>
+        </div>
+        <span class="t-separator--big--horizontal" v-if="viewEnabled"></span>
+        <div class="t-view" v-if="viewEnabled">
+            <h2 class="heading--h2">View as</h2>
+            <div class="t-view-button-container padding--top--sm padding--bottom--sm">
+                <div class="t-view-button margin--right--md padding--all--sm"
+                     :class="{'t-view-button--active': activeView === 'CONDENSED'}" @click="toggleView('CONDENSED')">
+                    <span class="glyphicon glyphicon-th"></span>
+                    <a href="javascript:void(0)">Condensed</a>
+                </div>
+                <div class="t-view-button margin--right--md padding--all--sm"
+                     :class="{'t-view-button--active': activeView === 'TIMELINE'}" @click="toggleView('TIMELINE')">
+                    <span class="glyphicon glyphicon-signal"></span>
+                    <a href="javascript:void(0)">Timeline</a>
                 </div>
             </div>
         </div>
@@ -48,13 +64,14 @@
     let importedClients = require('../../../../data/clients.json');
 
     export default Vue.component("t-sales-filters", {
-        props: ['data', 'busEvent'],
+        props: ['data', 'dateEnabled', 'personEnabled', 'viewEnabled'],
         components: [
             Dropdown,
             DatePicker
         ],
         data() {
             return {
+                activeView: "CONDENSED",
                 appliedFilters: {},
                 visibleSales: [],
             }
@@ -84,10 +101,14 @@
             }
         },
         methods: {
+            toggleView(viewCode) {
+                this.activeView = viewCode;
+                this.$emit("viewSelect", viewCode);
+            },
             receiveSelectedOption(criteria, option) {
                 this.appliedFilters[criteria] = option;
                 this.visibleSales = this.applyFilterLogic(this.appliedFilters, this.data);
-                bus.$emit(this.busEvent, this.visibleSales);
+                this.$emit("salesFiltered", this.visibleSales);
             },
             applyFilterLogic(filtersObject, sales) {
                 let localSales = [...sales];
@@ -133,6 +154,20 @@
             min-width: 50px;
             width: 10%;
             font-weight: normal;
+        }
+    }
+
+    .t-view-button-container {
+        .t-view-button {
+            cursor: pointer;
+            display: inline-block;
+            opacity: 0.5;
+            font-weight: bold;
+
+            &.t-view-button--active {
+                opacity: 1;
+                background-color: #f0f0f0;
+            }
         }
     }
 </style>

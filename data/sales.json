@@ -3,119 +3,126 @@
     "employeeID": "0",
     "id": "0",
     "clientID": "1",
-    "dateTime": "2017-08-05T00:00:00",
+    "dateTime": "2017-08-05T00:00:00.000-05:00",
     "amount": 1000
   },
   {
     "employeeID": "1",
     "id": "1",
     "clientID": "0",
-    "dateTime": "2016-08-01T00:00:00",
+    "dateTime": "2016-08-01T00:00:00.000-05:00",
     "amount": 0
   },
   {
     "employeeID": "2",
     "id": "2",
     "clientID": "0",
-    "dateTime": "2017-07-20T00:00:00",
+    "dateTime": "2017-07-20T00:00:00.000-05:00",
     "amount": -1000
   },
   {
     "employeeID": "1",
     "id": "3",
     "clientID": "1",
-    "dateTime": "2017-01-26T00:00:00",
+    "dateTime": "2017-01-26T00:00:00.000-05:00",
     "amount": -499
   },
   {
     "employeeID": "0",
     "id": "4",
     "clientID": "0",
-    "dateTime": "2017-01-25T00:00:00",
+    "dateTime": "2017-01-25T00:00:00.000-05:00",
     "amount": 345
   },
   {
     "employeeID": "2",
     "id": "5",
     "clientID": "1",
-    "dateTime": "2017-04-25T00:00:00",
+    "dateTime": "2017-04-25T00:00:00.000-05:00",
     "amount": 677
   },
   {
     "employeeID": "1",
     "id": "6",
     "clientID": "1",
-    "dateTime": "2017-04-02T00:00:00",
+    "dateTime": "2017-04-02T00:00:00.000-05:00",
     "amount": 2499
   },
   {
     "employeeID": "0",
     "id": "7",
     "clientID": "1",
-    "dateTime": "2017-08-08T00:00:00",
+    "dateTime": "2017-08-08T00:00:00.000-05:00",
     "amount": 3245
   },
   {
     "employeeID": "2",
     "id": "8",
     "clientID": "1",
-    "dateTime": "2017-08-02T00:00:00",
+    "dateTime": "2017-08-02T00:00:00.000-05:00",
     "amount": 1234
   },
   {
     "employeeID": "0",
     "id": "9",
     "clientID": "1",
-    "dateTime": "2017-08-11T00:00:00",
+    "dateTime": "2017-08-11T00:00:00.000-05:00",
     "amount": 2000
   },
   {
     "employeeID": "2",
     "id": "10",
     "clientID": "0",
-    "dateTime": "2017-08-20T00:00:00",
+    "dateTime": "2017-08-20T00:00:00.000-05:00",
     "amount": 1200
   },
   {
     "employeeID": "1",
     "id": "11",
     "clientID": "0",
-    "dateTime": "2017-08-03T00:00:00",
+    "dateTime": "2017-08-03T00:00:00.000-05:00",
     "amount": 4230
   },
   {
     "employeeID": "1",
     "id": "12",
     "clientID": "0",
-    "dateTime": "2017-08-07T00:00:00",
+    "dateTime": "2017-08-07T00:00:00.000-05:00",
     "amount": -800
   },
   {
     "employeeID": "1",
     "id": "13",
     "clientID": "0",
-    "dateTime": "2017-08-06T00:00:00",
+    "dateTime": "2017-08-06T00:00:00.000-05:00",
     "amount": 230
   },
   {
     "employeeID": "2",
     "id": "14",
     "clientID": "1",
-    "dateTime": "2017-08-10T00:00:00",
+    "dateTime": "2017-08-10T00:00:00.000-05:00",
     "amount": 0
   },
   {
     "employeeID": "2",
     "id": "15",
     "clientID": "1",
-    "dateTime": "2017-08-15T00:00:00",
+    "dateTime": "2017-08-15T00:00:00.000-05:00",
     "amount": 100
   },
   {
     "employeeID": "2",
     "id": "15",
     "clientID": "1",
-    "dateTime": "2017-08-15T00:00:00",
+    "dateTime": "2017-08-15T00:00:00.000-05:00",
     "amount": 500
+  },
+  {
+    "employeeID": "0",
+    "id": "16",
+    "clientID": "0",
+    "dateTime": "2017-08-15T00:00:00.000-05:00",
+    "amount": -200
   }
 ]

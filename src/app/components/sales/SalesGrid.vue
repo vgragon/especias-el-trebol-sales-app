@@ -2,16 +2,18 @@
     <div class="t-sales-grid">
         <div class="t-grid__section" v-for="section in data">
             <div class="t-grid__section__title">
-                {{getTimeValue("MONTH", section.dateTime)}}, {{getTimeValue("YEAR", section.dateTime)}}
+                <router-link :to="{ name: 'SalesDetail', params: { dateTime: section.dateTime, criteria: 'MONTH' }}">
+                    {{getTimeValue("MONTH", section.dateTime)}}, {{getTimeValue("YEAR", section.dateTime)}}
+                </router-link>
             </div>
             <div class="t-grid__section__content">
                 <div class="t-grid__section__element" v-for="sale in section.dailyRecords">
-                    <router-link :to="{ name: 'SalesDetail', params: { dateTime: sale.dateTime }}">
+                    <router-link :to="{ name: 'SalesDetail', params: { dateTime: sale.dateTime, criteria: 'DAY' }}">
                         <div class="t-grid__element__title">
                             {{getTimeValue("FRIENDLY_DAY", sale.dateTime)}} {{getTimeValue("DAY", sale.dateTime)}}
                         </div>
-                        <div class="t-grid__element__content"
-                             :class="{'t-number--positive': sale.sumAmount > 0, 't-number--negative': sale.sumAmount < 0}">
+                        <div class="t-grid__element__content t-number--money"
+                             :class="{'t-number--positive': sale.sumAmount > 0, 't-number--neutral': sale.sumAmount === 0, 't-number--negative': sale.sumAmount < 0}">
                             {{formatNumber('CURRENCY', sale.sumAmount)}}
                         </div>
                     </router-link>
@@ -40,19 +42,7 @@
                     return SalesService.getNaturalMonth(date);
                 }
             },
-            formatNumber(criteria, number) {
-                if (criteria === "CURRENCY") {
-                    let numberStringed = (number + "").split("").reverse().join("");
-                    let formattedNumber = "";
-                    let counter = 1;
-                    for (let char of numberStringed) {
-                        if (counter % 4 === 0 && !Number.isNaN(Number.parseInt(char))) formattedNumber = "," + formattedNumber;
-                        formattedNumber = char + formattedNumber;
-                        counter++;
-                    }
-                    return formattedNumber;
-                }
-            }
+            formatNumber: SalesService.formatNumber
         }
     });
 </script>
@@ -79,12 +69,6 @@
             &:hover {
                 background-color: #e8e6e6;
                 cursor: pointer;
-            }
-        }
-
-        .t-grid__element__content {
-            &::before {
-                content: "$";
             }
         }
     }

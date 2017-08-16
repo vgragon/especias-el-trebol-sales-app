@@ -1,4 +1,43 @@
 export default {
+    getFormattedDate: function (criteria, dateTime) {
+        if (criteria === "MONTH") {
+            return this.getNaturalMonth(dateTime) + ", " + dateTime.getFullYear();
+        }
+        else if (criteria === "DAY") {
+            return this.getNaturalMonth(dateTime) + " " + dateTime.getDate() + ", " + dateTime.getFullYear();
+        }
+    },
+    formatNumber: function (criteria, number) {
+        if (criteria === "CURRENCY") {
+            let numberStringed = (number + "").split("").reverse().join("");
+            let formattedNumber = "";
+            let counter = 1;
+            for (let char of numberStringed) {
+                if (counter % 4 === 0 && !Number.isNaN(Number.parseInt(char))) formattedNumber = "," + formattedNumber;
+                formattedNumber = char + formattedNumber;
+                counter++;
+            }
+            return formattedNumber;
+        }
+    },
+    toISOString: function (dt) {
+        let tzo = -dt.getTimezoneOffset(),
+            dif = tzo >= 0 ? '+' : '-',
+            pad = function (num) {
+                let norm = Math.abs(Math.floor(num));
+                return (norm < 10 ? '0' : '') + norm;
+            };
+
+        return dt.getFullYear() +
+            '-' + pad(dt.getMonth() + 1) +
+            '-' + pad(dt.getDate()) +
+            'T' + pad(dt.getHours()) +
+            ':' + pad(dt.getMinutes()) +
+            ':' + pad(dt.getSeconds()) +
+            '.000' +
+            dif + pad(tzo / 60) +
+            ':' + pad(tzo % 60);
+    },
     getMonthNumberJS: function (monthName) {
         switch (monthName) {
             case "January":

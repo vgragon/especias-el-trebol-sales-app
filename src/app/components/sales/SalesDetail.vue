@@ -2,9 +2,20 @@
     <div class="t-sales-detail">
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <div class="t-section__header margin--bottom--lg">
+                <div class="t-section__header margin--bottom--sm">
                     <h1 class="heading--h1 inline-block">Sales records of {{formattedSalesDate}}</h1>
                 </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <t-sales-filters :data="sales" :busEvent="'salesFilterSelected'"
+                                 @salesFiltered="applySalesFilter($event)"
+                                 :dateEnabled="false" :personEnabled="true" :viewEnabled="false"></t-sales-filters>
+                <div class="margin--bottom--sm font-size--md pull-right">
+                    <strong>Total amount:</strong>
+                    <span class="t-number--money"
+                          :class="{'t-number--positive': salesTotal > 0, 't-number--negative': salesTotal < 0}">{{formatNumber('CURRENCY', salesTotal)}}</span>
+                </div>
+                <div class="clearfix"></div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="t-table">
@@ -21,7 +32,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="t-table__row" v-for="record in sales">
+                    <div class="t-table__row" v-for="record in visibleSales">
                         <div class="row">
                             <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
                                 <span>{{ getPropertyValue(record.employeeInstance, ['givenName', 'familyName'], 'Undefined name')}}</span>
@@ -30,8 +41,8 @@
                                 <span>{{ getPropertyValue(record.clientInstance, ['name'], 'Undefined name')}}</span>
                             </div>
                             <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-                                <span class="t-table__row__sales-amount"
-                                      :class="{'t-number--positive': record.amount > 0, 't-number--negative': record.amount < 0}">{{record.amount}}</span>
+                                <span class="t-number--money"
+                                      :class="{'t-number--positive': record.amount > 0, 't-number--neutral': record.amount === 0, 't-number--negative': record.amount < 0}">{{formatNumber('CURRENCY', record.amount)}}</span>
                             </div>
                             <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
                                 <div class="pull-right">
@@ -50,20 +61,33 @@
     import Vue from 'vue';
     import SalesService from './SalesService';
     import SalesCreate from './SalesCreate.vue';
+    import SalesFilters from './SalesFilters.vue';
     const importedSales = require('../../../../data/sales.json');
     const importedEmployees = require('../../../../data/employees.json');
     const importedClients = require('../../../../data/clients.json');
 
     export default Vue.component("t-sales-detail", {
-        components: [SalesCreate],
+        components: [SalesCreate, SalesFilters],
         data() {
             return {
                 salesDateTime: undefined,
                 formattedSalesDate: undefined,
-                sales: []
+                sales: [],
+                visibleSales: [],
+                employees: [],
+                clients: [],
+                salesTotal: 0
             };
         },
         methods: {
+            applySalesFilter(sales) {
+                this.salesTotal = 0;
+                this.visibleSales = sales.map(record => {
+                    this.salesTotal += record.amount;
+                    return record;
+                });
+            },
+            formatNumber: SalesService.formatNumber,
             toggleModal() {
                 $("#t-sales-create").modal("show");
             },
@@ -76,12 +100,22 @@
 
                 value = value.trim();
                 return !value ? defaultValue : value;
+            },
+            filterByCriteria(criteria, salesRecords = [], valueToCompare) {
+                return salesRecords.filter(record => {
+                    if (criteria === "MONTH") return valueToCompare.getMonth() === new Date(record.dateTime).getMonth();
+                    else if (criteria === "DAY") return record.dateTime === SalesService.toISOString(valueToCompare);
+                });
             }
         },
         mounted() {
             this.salesDateTime = new Date(this.$route.params.dateTime);
-            this.formattedSalesDate = SalesService.getNaturalMonth(this.salesDateTime) + " " + this.salesDateTime.getDate() + ", " + this.salesDateTime.getFullYear();
-            this.sales = importedSales.filter(record => record.dateTime === this.$route.params.dateTime).map(record => {
+            this.employees = importedEmployees;
+            this.clients = importedClients;
+            let criteria = this.$route.params.criteria;
+            this.formattedSalesDate = SalesService.getFormattedDate(criteria, this.salesDateTime);
+            this.sales = this.filterByCriteria(criteria, importedSales, this.salesDateTime).map(record => {
+                this.salesTotal += record.amount;
                 Object.defineProperties(record, {
                     "employeeInstance": {
                         enumerable: false,
@@ -96,7 +130,9 @@
                 });
 
                 return record;
-            })
+            });
+
+            this.visibleSales = this.sales;
         }
     });
 </script>
@@ -115,12 +151,6 @@
 
             &.t-table__row--header {
                 background-color: $grey;
-            }
-
-            .t-table__row__sales-amount {
-                &::before {
-                    content: "$";
-                }
             }
         }
     }

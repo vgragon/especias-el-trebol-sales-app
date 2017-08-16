@@ -4,7 +4,7 @@
             <span :class="{'t-dropdown__placeholder': !selectedOption}">{{getDisplayText(selectedOption, displayProperty) || placeholder || 'Select'}}</span>
         </div>
         <div class="t-dropdown__chevron">
-            <i class="glyphicon glyphicon-chevron-down"></i>
+            <i class="glyphicon glyphicon-triangle-bottom"></i>
         </div>
         <div class="t-dropdown__options background--grey" :class="{'visibility--hidden': !isVisible}">
             <div class="t-dropdown__option t-dropdown__option--clean" @click="cleanSelection"
