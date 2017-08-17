@@ -18,6 +18,7 @@
                 width: 0,
                 height: 0,
                 path: undefined,
+                circles: undefined,
                 group: undefined,
                 xAxis: undefined,
                 yAxis: undefined
@@ -30,6 +31,7 @@
                 let lineSetter = this.setLine(axis);
                 this.updateAxis(axis, this.xAxis, this.yAxis);
                 this.drawTimeline(this.group, dataFeed, lineSetter, this.path);
+                this.drawCircles(this.group, dataFeed, axis);
             }
         },
         methods: {
@@ -102,18 +104,37 @@
             },
             setTransitions: function () {
                 this.transition = d3.transition()
-                    .duration(750)
+                    .duration(500)
                     .ease(d3.easeLinear);
             },
-            defineLineColor: function (data) {
+            defineLineColor: function (value) {
                 switch (true) {
-                    case data === 0:
+                    case value === 0:
                         return "#000";
-                    case data > 0:
-                        return "steelblue";
-                    case data < 0:
+                    case value > 0:
+                        return "#337ab7";
+                    case value < 0:
                         return "#DF3939";
                 }
+            },
+            drawCircles: function (group, data, axis) {
+                let {x, y} = axis;
+                let circles = group.selectAll("circle.t-shape--circle");
+
+                let update = circles.data(data, d => d.id);
+
+                let enter = update.enter()
+                    .append("circle").attr("class", "t-shape--circle");
+
+                enter.transition(this.transition).attr("cx", d => x(d.dateTime)).attr("cy", d => y(d.amount))
+                    .attr("r", 5)
+                    .attr("fill", d => this.defineLineColor(d.amount));
+
+                update.transition(this.transition).attr("cx", d => x(d.dateTime)).attr("cy", d => y(d.amount))
+                    .attr("r", 5)
+                    .attr("fill", d => this.defineLineColor(d.amount));
+
+                update.exit().remove();
             }
         },
         mounted() {
@@ -128,20 +149,17 @@
             this.drawAxis(this.group, axis);
             this.setTransitions();
             this.drawTimeline(this.group, dataFeed, lineSetter);
+            this.drawCircles(this.group, dataFeed, axis);
         }
     });
 </script>
 
 <style lang="scss">
     .t-timeline {
-        text {
-
-        }
-
         .line {
             fill: none;
-            stroke: steelblue;
-            stroke-width: 2px;
+            stroke: #858585;
+            stroke-width: 4px;
         }
     }
 </style>
