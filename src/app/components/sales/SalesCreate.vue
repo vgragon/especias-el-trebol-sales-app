@@ -55,8 +55,9 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="t-button t-button--default margin--right--sm" data-dismiss="modal">
-                        Close
+                    <button type="button" class="t-button t-button--default margin--right--sm" @click="resetForm"
+                            data-dismiss="modal">
+                        Cancel
                     </button>
                     <button type="button" class="t-button t-button--primary" @click="createSale">Save</button>
                 </div>
