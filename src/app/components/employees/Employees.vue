@@ -1,6 +1,6 @@
 <template>
     <section class="t-section">
-        <t-employee-create></t-employee-create>
+        <t-employee-create @employeeCreate="addEmployeeToList"></t-employee-create>
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
                 <div class="t-section__header margin--bottom--sm">
@@ -48,6 +48,11 @@
             },
             toggleModal() {
                 $("#t-employee-create").modal("show");
+            },
+            addEmployeeToList(newEmployee) {
+                newEmployee["fullName"] = newEmployee.givenName + " " + newEmployee.familyName;
+                this.allEmployees = [...this.allEmployees, newEmployee];
+                this.filteredEmployees = [...this.filteredEmployees, newEmployee];
             }
         },
         mounted() {

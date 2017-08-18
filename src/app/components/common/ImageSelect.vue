@@ -2,8 +2,7 @@
     <div class="t-image-select">
         <input type="file" :id="id + '--input'" class="t-input--file" ref="inputFile"
                style="display: none;"/>
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSf2u0RWmYALKJ431XNoTKjzu77ERLBIvXKlOEA-Q3DPo2h2rCB"
-             :id="id + '--image'" class="t-image--element margin--bottom--sm"/>
+        <img :src="defaultImage" :id="id + '--image'" class="t-image--element margin--bottom--sm"/>
         <a class="t-link" @click="$refs.inputFile.click()">Change image</a>
     </div>
 </template>
@@ -12,7 +11,20 @@
     import Vue from 'vue';
 
     export default Vue.component("t-image-select", {
-        props: ['id'],
+        props: ['id', 'clean'],
+        data() {
+            return {
+                defaultImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSf2u0RWmYALKJ431XNoTKjzu77ERLBIvXKlOEA-Q3DPo2h2rCB"
+            }
+        },
+        watch: {
+            clean: function ([value]) {
+                if (value) {
+                    let imageElement = document.getElementById(`${this.id}--image`);
+                    imageElement.src = this.defaultImage;
+                }
+            }
+        },
         methods: {
             handleFileSelect(ev) {
                 let file = ev.target.files[0];

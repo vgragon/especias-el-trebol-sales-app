@@ -24,12 +24,12 @@
             <div class="t-person-detail__info__name margin--bottom--md">
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                        <label>Given name</label>
+                        <label>First name</label>
                         <input type="text" class="t-input--text" title="First name" :readonly="!isEditModeEnabled"
                                :value="person.givenName"/>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                        <label>Family name</label>
+                        <label>Last name</label>
                         <input type="text" class="t-input--text" title="Last name" :readonly="!isEditModeEnabled"
                                :value="person.familyName"/>
                     </div>
