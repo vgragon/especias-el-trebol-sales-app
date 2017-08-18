@@ -1,6 +1,6 @@
 <template>
     <section class="t-section">
-        <t-client-create></t-client-create>
+        <t-client-create @clientCreate="addClientToList"></t-client-create>
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
                 <div class="t-section__header margin--bottom--sm">
@@ -45,6 +45,10 @@
             },
             toggleModal() {
                 $("#t-client-create").modal("show");
+            },
+            addClientToList(newClient) {
+                this.allClients = [...this.allClients, newClient];
+                this.filteredClients = [...this.filteredClients, newClient];
             }
         },
         mounted() {

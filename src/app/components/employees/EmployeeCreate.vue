@@ -18,6 +18,7 @@
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="align-center margin--bottom--lg">
                                     <t-image-select :id="'t-employee-image--new'" :clean="[cleanFields]"
+                                                    :defaultImage="defaultImage"
                                                     @imageSelect="receiveSelectedImage($event)"></t-image-select>
                                 </div>
                             </div>
@@ -98,7 +99,7 @@
                     <button type="button" class="t-button t-button--default margin--right--sm" data-dismiss="modal">
                         Close
                     </button>
-                    <button type="button" class="t-button t-button--primary" @click="createEmployee()">Save</button>
+                    <button type="button" class="t-button t-button--primary" @click="createEmployee">Save</button>
                 </div>
             </div>
         </div>
@@ -114,6 +115,7 @@
         data() {
             return {
                 employee: {},
+                defaultImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSf2u0RWmYALKJ431XNoTKjzu77ERLBIvXKlOEA-Q3DPo2h2rCB",
                 cleanFields: [false],
                 errorMessages: []
             }
@@ -165,7 +167,7 @@
                     return;
                 }
                 this.employee.id = Math.random().toFixed(5) * 100000;
-                this.employee.image = this.employee.image || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSf2u0RWmYALKJ431XNoTKjzu77ERLBIvXKlOEA-Q3DPo2h2rCB";
+                this.employee.image = this.employee.image || this.defaultImage;
                 this.errorMessages = [];
                 this.$emit("employeeCreate", this.employee);
                 this.resetForm();

@@ -13,19 +13,20 @@
                             are required.</em>
                     </div>
                     <div class="clearfix"></div>
-                    <form class="t-form--create--employee">
+                    <form class="t-form--create--client">
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="align-center margin--bottom--lg">
-                                        <t-image-select :id="'t-client-image--new'"
+                                        <t-image-select :id="'t-client-image--new'" :clean="cleanFields"
+                                                        :defaultImage="defaultImage"
                                                         @imageSelect="receiveSelectedImage($event)"></t-image-select>
                                     </div>
                                 </div>
                                 <div class="form-group margin--bottom--md">
                                     <label class="margin--bottom--xs">Company name</label><sup
                                         class="t-indicator t-indicator--mandatory">*</sup>
-                                    <input type="text" class="t-input--text" title="Client name"
+                                    <input type="text" class="t-input t-input--text" title="Company name"
                                            @change="client.name = $event.target.value"/>
                                 </div>
                             </div>
@@ -33,14 +34,14 @@
                                 <div class="form-group margin--bottom--md">
                                     <label class="margin--bottom--xs">Primary telephone number</label><sup
                                         class="t-indicator t-indicator--mandatory">*</sup>
-                                    <input type="text" class="t-input--text"
+                                    <input type="tel" class="t-input t-input--text" title="Primary telephone number"
                                            @change="client.primaryTelephoneNumber = $event.target.value"/>
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                 <div class="form-group margin--bottom--md">
                                     <label class="margin--bottom--xs">Secondary telephone number</label>
-                                    <input type="text" class="t-input--text"
+                                    <input type="tel" class="t-input t-input--text" title="Secondary telephone number"
                                            @change="client.secondaryTelephoneNumber = $event.target.value"/>
                                 </div>
                             </div>
@@ -48,28 +49,37 @@
                                 <div class="form-group margin--bottom--md">
                                     <label class="margin--bottom--xs">Primary email</label><sup
                                         class="t-indicator t-indicator--mandatory">*</sup>
-                                    <input type="text" class="t-input--text"
+                                    <input type="email" class="t-input t-input--text" title="Primary email"
                                            @change="client.primaryEmail = $event.target.value"/>
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                 <div class="form-group margin--bottom--md">
                                     <label class="margin--bottom--xs">Secondary email</label>
-                                    <input type="text" class="t-input--text"
+                                    <input type="email" class="t-input t-input--text" title="Secondary email"
                                            @change="client.secondaryEmail = $event.target.value"/>
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="form-group margin--bottom--md">
-                                    <label class="margin--bottom--xs">Home address</label><sup
+                                    <label class="margin--bottom--xs">Work address</label><sup
                                         class="t-indicator t-indicator--mandatory">*</sup>
-                                    <input type="text" class="t-input--text"
+                                    <input type="text" class="t-input t-input--text" title="Work address"
                                            @change="client.workAddress = $event.target.value"/>
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <label class="margin--bottom--xs">Notes</label>
-                                <textarea class="t-textarea"></textarea>
+                                <textarea class="t-input t-textarea" title="Notes"></textarea>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="t-message t-message--error" v-if="errorMessages.length > 0">
+                                    <div class="t-message--error__list">
+                                        <div class="t-message--error__list__element" v-for="message in errorMessages">
+                                            <span>{{message}}</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </form>
@@ -78,7 +88,7 @@
                     <button type="button" class="t-button t-button--default margin--right--sm" data-dismiss="modal">
                         Close
                     </button>
-                    <button type="button" class="t-button t-button--primary">Save</button>
+                    <button type="button" class="t-button t-button--primary" @click="createClient">Save</button>
                 </div>
             </div>
         </div>
@@ -87,18 +97,66 @@
 
 <script>
     import Vue from 'vue';
+    import ImageSelect from '../common/ImageSelect.vue';
 
     export default Vue.component("t-client-create", {
+        components: [ImageSelect],
         data() {
             return {
-                client: {}
+                client: {},
+                defaultImage: "http://cdn.onlinewebfonts.com/svg/img_242128.svg",
+                cleanFields: [false],
+                errorMessages: []
             }
         },
         methods: {
+            resetForm() {
+                this.client = {};
+                this.cleanFields = [true];
+                $("#t-client-create").find(".t-input").val("");
+            },
+            isClientValid: function (client) {
+                let response = {};
+                response.messages = [];
+                if (this.isStringEmptyOrUndefined(client.name)) {
+                    response.isError = true;
+                    response.messages.push("Please enter the company name");
+                }
+                if (this.isStringEmptyOrUndefined(client.primaryTelephoneNumber)) {
+                    response.isError = true;
+                    response.messages.push("Please enter the primary telephone number");
+                }
+                if (this.isStringEmptyOrUndefined(client.primaryEmail)) {
+                    response.isError = true;
+                    response.messages.push("Please enter the primary email");
+                }
+                if (this.isStringEmptyOrUndefined(client.workAddress)) {
+                    response.isError = true;
+                    response.messages.push("Please enter the work address");
+                }
+
+                return response;
+            },
             receiveSelectedImage(base64) {
                 if (typeof base64 !== "undefined") {
                     this.client.image = base64;
                 }
+            },
+            isStringEmptyOrUndefined(string) {
+                return !string || (!!string && !string.trim());
+            },
+            createClient() {
+                let response = this.isClientValid(this.client);
+                if (response.isError) {
+                    this.errorMessages = response.messages;
+                    return;
+                }
+                this.client.id = Math.random().toFixed(5) * 100000;
+                this.client.image = this.client.image || this.defaultImage;
+                this.errorMessages = [];
+                this.$emit("clientCreate", this.client);
+                this.resetForm();
+                $("#t-client-create").modal("hide");
             }
         }
     });

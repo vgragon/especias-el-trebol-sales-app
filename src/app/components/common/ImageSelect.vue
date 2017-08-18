@@ -11,12 +11,7 @@
     import Vue from 'vue';
 
     export default Vue.component("t-image-select", {
-        props: ['id', 'clean'],
-        data() {
-            return {
-                defaultImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSf2u0RWmYALKJ431XNoTKjzu77ERLBIvXKlOEA-Q3DPo2h2rCB"
-            }
-        },
+        props: ['id', 'clean', 'defaultImage'],
         watch: {
             clean: function ([value]) {
                 if (value) {
