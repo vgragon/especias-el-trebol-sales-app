@@ -198,7 +198,7 @@
         .line {
             fill: none;
             stroke: #858585;
-            stroke-width: 4px;
+            stroke-width: 2px;
         }
         .t-tooltip {
             top: 0;
