@@ -221,3 +221,13 @@ a {
     content: "$";
   }
 }
+
+.t-message {
+  padding: $spacing-sm;
+
+  &.t-message--error {
+    border: 1px solid $red;
+    color: $red;
+    background-color: $lightRed;
+  }
+}

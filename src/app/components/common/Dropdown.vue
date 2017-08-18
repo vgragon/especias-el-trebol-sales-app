@@ -21,11 +21,16 @@
     import $ from 'jquery';
 
     export default Vue.component("t-dropdown", {
-        props: ['data', 'placeholder', 'displayProperty', 'predefinedValue', 'cleanSelectionEnabled', 'isDisabled'],
+        props: ['data', 'placeholder', 'displayProperty', 'predefinedValue', 'cleanSelectionEnabled', 'isDisabled', 'clean'],
         data() {
             return {
                 selectedOption: this.predefinedValue,
                 isVisible: false
+            }
+        },
+        watch: {
+            clean: function ([value]) {
+                if (value) this.selectedOption = undefined
             }
         },
         methods: {

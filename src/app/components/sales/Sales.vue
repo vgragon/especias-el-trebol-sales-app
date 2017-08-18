@@ -1,6 +1,6 @@
 <template>
     <section class="t-section">
-        <t-sales-create></t-sales-create>
+        <t-sales-create @saleCreate="onSaleCreate"></t-sales-create>
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
                 <div class="t-section__header margin--bottom--sm">
@@ -61,6 +61,11 @@
             }
         },
         methods: {
+            onSaleCreate(newSale) {
+                this.sales = [...this.sales, newSale].sort(SalesService.sortByDate);
+                this.visibleSales = this.sales;
+                this.groupedSales = this.groupSales(this.visibleSales);
+            },
             toggleModal() {
                 $("#t-sales-create").modal("show");
             },
@@ -115,14 +120,14 @@
             },
             applySalesGrouping(data) {
                 this.visibleSales = data;
-                this.groupedSales = this.groupSales(data);
+                this.groupedSales = this.groupSales(this.visibleSales);
             }
         },
         mounted() {
             this.sales = importedSales.sort(SalesService.sortByDate);
             this.visibleSales = this.sales;
             this.employees = importedEmployees;
-            this.groupedSales = this.groupSales(this.sales);
+            this.groupedSales = this.groupSales(this.visibleSales);
             this.isLoading = false;
         }
     });

@@ -12,10 +12,18 @@
     import * as datePicker from "eonasdan-bootstrap-datetimepicker";
 
     export default Vue.component("t-date-picker", {
-        props: ['id', 'isDisabled', 'busEvent', 'linkedId', 'placeholder'],
+        props: ['id', 'isDisabled', 'busEvent', 'linkedId', 'placeholder', 'clean'],
         data() {
             return {
                 lastDate: undefined
+            }
+        },
+        watch: {
+            clean: function ([value]) {
+                if (value) {
+                    this.lastDate = undefined;
+                    document.getElementById(this.id).value = "";
+                }
             }
         },
         methods: {
