@@ -1,10 +1,10 @@
 <template>
     <div class="t-image-select">
-        <input type="file" :id="id + '--input'" class="t-input--file"
+        <input type="file" :id="id + '--input'" class="t-input--file" ref="inputFile"
                style="display: none;"/>
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSf2u0RWmYALKJ431XNoTKjzu77ERLBIvXKlOEA-Q3DPo2h2rCB"
              :id="id + '--image'" class="t-image--element margin--bottom--sm"/>
-        <a class="t-link" @click="toggleImageSelection">Change image</a>
+        <a class="t-link" @click="$refs.inputFile.click()">Change image</a>
     </div>
 </template>
 
@@ -14,9 +14,6 @@
     export default Vue.component("t-image-select", {
         props: ['id'],
         methods: {
-            toggleImageSelection() {
-                $(`#${this.id}--input`).click();
-            },
             handleFileSelect(ev) {
                 let file = ev.target.files[0];
                 if (!!file) {
