@@ -89,7 +89,7 @@
         },
         mounted() {
             let id = this.$route.params.id;
-            this.person = importedEmployees.find(employee => employee.id === id);
+            this.person = importedEmployees.find(employee => employee.id == id);
             console.log(this.person);
         }
     });

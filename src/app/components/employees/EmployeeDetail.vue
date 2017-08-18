@@ -17,7 +17,8 @@
              :style="{'background-image': 'url(' + (person.image || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSf2u0RWmYALKJ431XNoTKjzu77ERLBIvXKlOEA-Q3DPo2h2rCB') + ')'}"></div>
         <div class="t-person-detail__alias margin--top--sm margin--bottom--lg font-size--md">
             <span v-if="!isEditModeEnabled">{{person.alias}}</span>
-            <input type="text" class="t-input--text font-size--md" title="Alias"
+            <input type="text" class="t-input--text" title="Alias"
+                   placeholder="Define an alias here"
                    v-if="isEditModeEnabled" :value="person.alias"/>
         </div>
         <div class="t-person-detail__info margin--bottom--md">
@@ -79,7 +80,8 @@
             </div>
         </div>
         <div class="pull-right">
-            <button class="t-button t-button--primary" v-if="isEditModeEnabled">Save</button>
+            <button class="t-button t-button--default margin--right--sm" v-if="isEditModeEnabled" @click="saveEmployee">Reset</button>
+            <button class="t-button t-button--primary" v-if="isEditModeEnabled" @click="saveEmployee">Save</button>
         </div>
         <div class="clearfix"></div>
     </div>
@@ -93,13 +95,19 @@
         data() {
             return {
                 person: undefined,
+                originalPerson: undefined,
                 isEditModeEnabled: false
             };
         },
+        methods: {
+            saveEmployee() {
+
+            }
+        },
         mounted() {
             let id = this.$route.params.id;
-            this.person = importedEmployees.find(employee => employee.id === id);
-            console.log(this.person);
+            this.originalPerson = importedEmployees.find(employee => employee.id == id);
+            this.person = Object.assign({}, this.originalPerson);
         }
     });
 </script>
