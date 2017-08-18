@@ -1,6 +1,6 @@
 [
   {
-    "id": "0",
+    "id": 0,
     "givenName": "Vicente",
     "familyName": "Grajeda",
     "alias": "Vicente Grajeda",
@@ -11,7 +11,7 @@
     "homeAddress": "Somewhere, 44330, Monterrey, Nuevo León"
   },
   {
-    "id": "1",
+    "id": 1,
     "givenName": "Dulce",
     "familyName": "Gonzalez",
     "alias": "Dulce Gonzalez",
@@ -23,7 +23,7 @@
     "homeAddress": "Melchor 332, 12445, Culiacan, Sinaloa"
   },
   {
-    "id": "2",
+    "id": 2,
     "givenName": "Juan",
     "familyName": "Perez",
     "alias": "Juancho",

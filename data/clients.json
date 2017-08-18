@@ -1,6 +1,6 @@
 [
   {
-    "id": "0",
+    "id": 0,
     "name": "Pueblo Bonito",
     "alias": "Pueblo Bonito",
     "primaryTelephoneNumber": "8117100358",
@@ -10,7 +10,7 @@
     "workAddress": "Emerald Bay Somewhere"
   },
   {
-    "id": "1",
+    "id": 1,
     "name": "Operadora Polar",
     "alias": "OPPO",
     "primaryTelephoneNumber": "811729298",
