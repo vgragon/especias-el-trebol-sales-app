@@ -20,6 +20,7 @@
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         <t-sales-grid :data="groupedSales" v-if="activeView === 'CONDENSED'"></t-sales-grid>
                         <t-timeline :id="'t-sales-timeline'" :data="visibleSales"
+                                    :employees="employees" :clients="clients"
                                     v-if="activeView === 'TIMELINE'"></t-timeline>
                     </div>
                 </div>
@@ -39,6 +40,7 @@
     // Test
     let importedSales = require('../../../../data/sales.json');
     let importedEmployees = require('../../../../data/employees.json');
+    let importedClients = require('../../../../data/clients.json');
 
     export default Vue.component("t-sales", {
         components: [
@@ -52,6 +54,8 @@
                 activeView: "CONDENSED",
                 isLoading: false,
                 visibleSales: [],
+                employees: importedEmployees,
+                clients: importedClients,
                 sales: [],
                 groupedSales: []
             }

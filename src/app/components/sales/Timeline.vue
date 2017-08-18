@@ -10,10 +10,11 @@
     import * as d3 from 'd3';
 
     export default Vue.component("t-timeline", {
-        props: ['id', 'data'],
+        props: ['id', 'data', 'employees', 'clients'],
         data() {
             return {
                 canvas: undefined,
+                mainContainer: undefined,
                 margin: {top: 20, right: 20, bottom: 30, left: 50},
                 width: 0,
                 height: 0,
@@ -31,7 +32,8 @@
                 let lineSetter = this.setLine(axis);
                 this.updateAxis(axis, this.xAxis, this.yAxis);
                 this.drawTimeline(this.group, dataFeed, lineSetter, this.path);
-                this.drawCircles(this.group, dataFeed, axis);
+                let circles = this.drawCircles(this.group, dataFeed, axis);
+                this.drawTooltip(circles, axis);
             }
         },
         methods: {
@@ -41,7 +43,17 @@
                 return svg;
             },
             prepareData: function (data) {
-                return data.map(d => Object.assign({}, d, {dateTime: new Date(d.dateTime)})).sort((a, b) => a.dateTime - b.dateTime);
+                return data.map(d => {
+                    let client = this.clients.find(client => client.id === d.clientID);
+                    let employee = this.employees.find(employee => employee.id === d.employeeID);
+                    return Object.assign({}, d, {
+                        dateTime: new Date(d.dateTime)
+                    }, {
+                        clientName: client ? client.name : undefined
+                    }, {
+                        employeeName: employee ? employee.givenName + " " + employee.familyName : undefined
+                    })
+                }).sort((a, b) => a.dateTime - b.dateTime);
             },
             setTimelineAxis: function (data = []) {
                 let x = d3.scaleTime()
@@ -119,29 +131,53 @@
             },
             drawCircles: function (group, data, axis) {
                 let {x, y} = axis;
-                let circles = group.selectAll("circle.t-shape--circle");
+                let circles = group.selectAll("g.t-shape--circle");
 
                 let update = circles.data(data, d => d.id);
 
                 let enter = update.enter()
-                    .append("circle").attr("class", "t-shape--circle");
+                    .append("g").attr("class", "t-shape--circle");
 
-                enter.transition(this.transition).attr("cx", d => x(d.dateTime)).attr("cy", d => y(d.amount))
+                enter.attr("transform", d => `translate(${x(d.dateTime)}, ${y(d.amount)})`).append("circle").attr("cx", 0).attr("cy", 0)
                     .attr("r", 5)
                     .attr("fill", d => this.defineLineColor(d.amount));
 
-                update.transition(this.transition).attr("cx", d => x(d.dateTime)).attr("cy", d => y(d.amount))
+                update.attr("transform", d => `translate(${x(d.dateTime)}, ${y(d.amount)})`).append("circle").attr("cx", 0).attr("cy", 0)
                     .attr("r", 5)
                     .attr("fill", d => this.defineLineColor(d.amount));
 
                 update.exit().remove();
+
+                return enter;
+            },
+            drawTooltip: function (elements, axis) {
+                let _this = this;
+                let {x, y} = axis;
+                elements.on("mouseenter", function () {
+                    let data = d3.select(this).data()[0];
+                    let tooltipDiv = _this.mainContainer.append("div").attr("class", "t-tooltip t-tooltip--timeline");
+                    _this.addTooltipInfo(tooltipDiv, "Date", SalesService.getFormattedDate("DAY", data.dateTime) || "No data");
+                    _this.addTooltipInfo(tooltipDiv, "Employee", data.employeeName || "No data");
+                    _this.addTooltipInfo(tooltipDiv, "Client", data.clientName || "No data");
+                    _this.addTooltipInfo(tooltipDiv, "Amount", "$" + SalesService.formatNumber("CURRENCY", data.amount) || "No data");
+                    let translateX = x(data.dateTime) - 150 / 2;
+                    let translateY = y(data.amount) - 100;
+                    tooltipDiv.style("transform", `translate(${translateX}px, ${translateY}px)`);
+                }).on("mouseleave", function () {
+                    d3.selectAll(".t-tooltip--timeline").remove();
+                });
+            },
+            addTooltipInfo: function (parentDiv, label, info) {
+                let clientDiv = parentDiv.append("div");
+                clientDiv.append("strong").style("display", "inline-block").style("width", "70px").text(label + ": ");
+                clientDiv.append("span").text(info);
             }
         },
         mounted() {
-            let mainContainer = d3.select(`#${this.id}`).style("height", "350px");
-            this.width = SalesService.getPixelsNumber(mainContainer.style("width")) - this.margin.left - this.margin.right;
-            this.height = SalesService.getPixelsNumber(mainContainer.style("height")) - this.margin.top - this.margin.bottom;
-            this.canvas = this.createSVGContainer(mainContainer);
+            this.mainContainer = d3.select(`#${this.id}`).style("height", "350px");
+            this.width = SalesService.getPixelsNumber(this.mainContainer.style("width")) - this.margin.left - this.margin.right;
+            this.height = SalesService.getPixelsNumber(this.mainContainer.style("height")) - this.margin.top - this.margin.bottom;
+            this.canvas = this.createSVGContainer(this.mainContainer);
             let dataFeed = this.prepareData(this.data);
             let axis = this.setTimelineAxis(dataFeed);
             let lineSetter = this.setLine(axis);
@@ -149,17 +185,29 @@
             this.drawAxis(this.group, axis);
             this.setTransitions();
             this.drawTimeline(this.group, dataFeed, lineSetter);
-            this.drawCircles(this.group, dataFeed, axis);
+            let circles = this.drawCircles(this.group, dataFeed, axis);
+            this.drawTooltip(circles, axis);
         }
     });
 </script>
 
 <style lang="scss">
+    @import '../../variables';
+
     .t-timeline {
         .line {
             fill: none;
             stroke: #858585;
             stroke-width: 4px;
+        }
+        .t-tooltip {
+            top: 0;
+            min-height: 100px;
+            font-size: $font-size--small;
+            position: absolute;
+            min-width: 150px;
+            background-color: $grey;
+            padding: $spacing-sm;
         }
     }
 </style>
