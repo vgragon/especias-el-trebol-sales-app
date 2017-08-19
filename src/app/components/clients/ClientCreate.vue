@@ -97,6 +97,7 @@
 
 <script>
     import Vue from 'vue';
+    import PersonService from '../common/PersonService';
     import ImageSelect from '../common/ImageSelect.vue';
 
     export default Vue.component("t-client-create", {
@@ -115,28 +116,6 @@
                 this.cleanFields = [true];
                 $("#t-client-create").find(".t-input").val("");
             },
-            isClientValid: function (client) {
-                let response = {};
-                response.messages = [];
-                if (this.isStringEmptyOrUndefined(client.name)) {
-                    response.isError = true;
-                    response.messages.push("Please enter the company name");
-                }
-                if (this.isStringEmptyOrUndefined(client.primaryTelephoneNumber)) {
-                    response.isError = true;
-                    response.messages.push("Please enter the primary telephone number");
-                }
-                if (this.isStringEmptyOrUndefined(client.primaryEmail)) {
-                    response.isError = true;
-                    response.messages.push("Please enter the primary email");
-                }
-                if (this.isStringEmptyOrUndefined(client.workAddress)) {
-                    response.isError = true;
-                    response.messages.push("Please enter the work address");
-                }
-
-                return response;
-            },
             receiveSelectedImage(base64) {
                 if (typeof base64 !== "undefined") {
                     this.client.image = base64;
@@ -146,7 +125,7 @@
                 return !string || (!!string && !string.trim());
             },
             createClient() {
-                let response = this.isClientValid(this.client);
+                let response = PersonService.isClientValid(this.client);
                 if (response.isError) {
                     this.errorMessages = response.messages;
                     return;

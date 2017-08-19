@@ -96,6 +96,7 @@
 
 <script>
     import Vue from 'vue';
+    import PersonService from '../common/PersonService';
     const importedClients = require('./../../../../data/clients.json');
 
     export default Vue.component("t-client-detail", {
@@ -118,6 +119,12 @@
                 this.$router.replace("/clients/");
             },
             saveClient() {
+                let response = PersonService.isClientValid(this.employee);
+                if (response.isError) {
+                    this.errorMessages = response.messages;
+                    return;
+                }
+
                 this.originalPerson = Object.assign({}, this.person);
             },
             resetForm() {

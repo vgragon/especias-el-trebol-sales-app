@@ -23,10 +23,7 @@
                             <div class="t-sales-report-container__section margin--bottom--md"
                                  v-for="salesGroup in groupedSales">
                                 <div class="t-sales-report-container__section__title font-weight--bold margin--bottom--sm">
-                                    <router-link
-                                            :to="{ name: 'SalesDetail', params: { dateTime: salesGroup.dateTime, criteria: 'MONTH' }}">
-                                        {{getTimeValue("MONTH", salesGroup.dateTime)}}, {{getTimeValue("YEAR", salesGroup.dateTime)}}
-                                    </router-link>
+                                    <span>{{getTimeValue("MONTH", salesGroup.dateTime)}}, {{getTimeValue("YEAR", salesGroup.dateTime)}}</span>
                                 </div>
                                 <t-sales-report :data="getAllRecordsFromGroup(salesGroup)"
                                                 :employees="employees"

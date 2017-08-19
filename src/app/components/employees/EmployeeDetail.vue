@@ -103,6 +103,7 @@
 
 <script>
     import Vue from 'vue';
+    import PersonService from '../common/PersonService';
     import Employees from './Employees.vue';
     const importedEmployees = require('./../../../../data/employees.json');
 
@@ -126,6 +127,12 @@
                 this.$router.replace("/employees/");
             },
             saveEmployee() {
+                let response = PersonService.isEmployeeValid(this.employee);
+                if (response.isError) {
+                    this.errorMessages = response.messages;
+                    return;
+                }
+
                 this.originalPerson = Object.assign({}, this.person);
             },
             resetForm() {
