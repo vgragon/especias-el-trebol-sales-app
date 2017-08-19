@@ -134,6 +134,7 @@
                 }
 
                 this.originalPerson = Object.assign({}, this.person);
+                this.isEditModeEnabled = false;
             },
             resetForm() {
                 this.person = Object.assign({}, this.originalPerson);
