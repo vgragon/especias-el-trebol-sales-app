@@ -54,14 +54,20 @@
 </script>
 
 <style lang="scss">
-    .t-image--element {
-        max-width: 100%;
-        position: relative;
+    .t-image-select {
+        text-align: center;
         width: 170px;
-        height: 170px;
-        border-radius: 100%;
-        display: block;
+        height: 200px;
         margin: auto;
-        border: 8px solid #F0F0F0;
+
+        .t-image--element {
+            width: 100%;
+            position: relative;
+            height: 170px;
+            border-radius: 100%;
+            display: block;
+            margin: auto;
+            border: 8px solid #F0F0F0;
+        }
     }
 </style>

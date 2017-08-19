@@ -13,17 +13,25 @@
                 </div>
             </div>
         </div>
-        <div class="t-person-detail__image"
-             :style="{'background-image': 'url(' + (person.image || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSf2u0RWmYALKJ431XNoTKjzu77ERLBIvXKlOEA-Q3DPo2h2rCB') + ')'}"></div>
-        <div class="t-person-detail__alias margin--top--sm margin--bottom--lg font-size--md">
-            <span v-if="!isEditModeEnabled" class="font-size--md">{{person.alias}}</span>
-            <input type="text" class="t-input--text font-size--md" title="Alias"
-                   v-if="isEditModeEnabled" :value="person.alias"/>
+        <div class="align-center">
+            <t-image-select :id="'t-employee-image--existing'" :clean="[cleanFields]" v-if="isEditModeEnabled"
+                            :defaultImage="defaultImage"
+                            @imageSelect="receiveSelectedImage($event)"></t-image-select>
+            <div class="t-person-detail__image" v-if="!isEditModeEnabled"
+                 :style="{'background-image': 'url(' + (person.image || defaultImage) + ')'}">
+            </div>
+            <div class="t-person-detail__alias margin--top--sm margin--bottom--lg font-size--md">
+                <span v-if="!isEditModeEnabled" class="font-size--md">{{person.alias}}</span>
+                <input type="text" class="t-input--text font-size--md" title="Alias"
+                       placeholder="Define an alias here" @change="person.alias = $event.target.value"
+                       v-if="isEditModeEnabled" :value="person.alias"/>
+            </div>
         </div>
         <div class="t-person-detail__info margin--bottom--md">
             <div class="t-person-detail__info__name margin--bottom--md">
                 <label>Company name</label>
-                <input type="text" class="t-input--text" title="Company name" :readonly="!isEditModeEnabled"
+                <input type="text" class="t-input--text" title="Company name"
+                       @change="person.name = $event.target.value" :readonly="!isEditModeEnabled"
                        :value="person.name"/>
             </div>
             <div class="t-person-detail__info__phone margin--bottom--md">
@@ -32,12 +40,14 @@
                         <label>Telephone number</label>
                         <input type="text" class="t-input--text" title="Telephone number"
                                :readonly="!isEditModeEnabled"
+                               @change="person.primaryTelephoneNumber = $event.target.value"
                                :value="person.primaryTelephoneNumber"/>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                         <label>Cellphone number</label>
                         <input type="text" class="t-input--text" title="Cellphone number"
                                :readonly="!isEditModeEnabled"
+                               @change="person.secondaryTelephoneNumber = $event.target.value"
                                :value="person.secondaryTelephoneNumber"/>
                     </div>
                 </div>
@@ -47,13 +57,13 @@
                     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                         <label>Primary email</label>
                         <input type="text" class="t-input--text" title="Primary email"
-                               :readonly="!isEditModeEnabled"
+                               :readonly="!isEditModeEnabled" @change="person.primaryEmail = $event.target.value"
                                :value="person.primaryEmail"/>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                         <label>Secondary email</label>
                         <input type="text" class="t-input--text" title="Secondary email"
-                               :readonly="!isEditModeEnabled"
+                               :readonly="!isEditModeEnabled" @change="person.secondaryEmail = $event.target.value"
                                :value="person.secondaryEmail"/>
                     </div>
                 </div>
@@ -61,12 +71,12 @@
             <div class="t-person-detail__info__address margin--bottom--md">
                 <label>Address</label>
                 <input type="text" class="t-input--text" title="Address" :readonly="!isEditModeEnabled"
-                       :value="person.workAddress"/>
+                       :value="person.workAddress" @change="person.workAddress = $event.target.value"/>
             </div>
             <div class="t-person-detail__info__notes">
                 <label>Notes</label>
                 <textarea class="t-textarea" title="Notes" :readonly="!isEditModeEnabled"
-                          :value="person.notes"></textarea>
+                          :value="person.notes" @change="person.notes = $event.target.value"></textarea>
             </div>
         </div>
         <div class="pull-left">
@@ -92,24 +102,31 @@
         data() {
             return {
                 person: undefined,
+                defaultImage: "http://cdn.onlinewebfonts.com/svg/img_242128.svg",
                 originalPerson: undefined,
+                cleanFields: [false],
                 isEditModeEnabled: false
             };
         },
         methods: {
+            receiveSelectedImage(base64) {
+                if (typeof base64 !== "undefined") {
+                    this.person.image = base64;
+                }
+            },
             deleteClient() {
-
+                this.$router.replace("/clients/");
             },
             saveClient() {
-
+                this.originalPerson = Object.assign({}, this.person);
             },
             resetForm() {
-
+                this.person = Object.assign({}, this.originalPerson);
             }
         },
         mounted() {
-            let id = this.$route.params.id;
-            this.originalPerson = importedClients.find(client => client.id == id);
+            let id = Number.parseInt(this.$route.params.id);
+            this.originalPerson = importedClients.find(client => client.id === id);
             this.person = Object.assign({}, this.originalPerson);
         }
     });
