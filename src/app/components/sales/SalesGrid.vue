@@ -30,19 +30,8 @@
     export default Vue.component("t-sales-grid", {
         props: ['data'],
         methods: {
-            getTimeValue(criteria, dateTime) {
-                let date = new Date(dateTime);
-                if (criteria === "DAY") {
-                    return date.getDate();
-                } else if (criteria === "FRIENDLY_DAY") {
-                    return SalesService.getNaturalDay(date);
-                } else if (criteria === "YEAR") {
-                    return date.getFullYear();
-                } else if (criteria === "MONTH") {
-                    return SalesService.getNaturalMonth(date);
-                }
-            },
-            formatNumber: SalesService.formatNumber
+            getTimeValue: SalesService.getTimeValue.bind(SalesService),
+            formatNumber: SalesService.formatNumber.bind(SalesService)
         }
     });
 </script>

@@ -43,6 +43,11 @@
                     <a href="javascript:void(0)">Condensed</a>
                 </div>
                 <div class="t-view-button margin--right--md padding--all--sm"
+                     :class="{'t-view-button--active': activeView === 'REPORT'}" @click="toggleView('REPORT')">
+                    <span class="glyphicon glyphicon-list-alt"></span>
+                    <a href="javascript:void(0)">Report</a>
+                </div>
+                <div class="t-view-button margin--right--md padding--all--sm"
                      :class="{'t-view-button--active': activeView === 'TIMELINE'}" @click="toggleView('TIMELINE')">
                     <span class="glyphicon glyphicon-signal"></span>
                     <a href="javascript:void(0)">Timeline</a>

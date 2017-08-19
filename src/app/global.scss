@@ -167,6 +167,14 @@ a {
     }
   }
 
+  &.t-button--danger {
+    background-color: $red;
+
+    &:hover {
+      background-color: darken($red, 5);
+    }
+  }
+
   &.t-button--default {
     background-color: $lightGrey;
 

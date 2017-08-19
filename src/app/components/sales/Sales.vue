@@ -19,6 +19,20 @@
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         <t-sales-grid :data="groupedSales" v-if="activeView === 'CONDENSED'"></t-sales-grid>
+                        <div class="t-sales-report-container" v-if="activeView === 'REPORT'">
+                            <div class="t-sales-report-container__section margin--bottom--md"
+                                 v-for="salesGroup in groupedSales">
+                                <div class="t-sales-report-container__section__title font-weight--bold margin--bottom--sm">
+                                    <router-link
+                                            :to="{ name: 'SalesDetail', params: { dateTime: salesGroup.dateTime, criteria: 'MONTH' }}">
+                                        {{getTimeValue("MONTH", salesGroup.dateTime)}}, {{getTimeValue("YEAR", salesGroup.dateTime)}}
+                                    </router-link>
+                                </div>
+                                <t-sales-report :data="getAllRecordsFromGroup(salesGroup)"
+                                                :employees="employees"
+                                                :clients="clients" :showDate="true"></t-sales-report>
+                            </div>
+                        </div>
                         <t-timeline :id="'t-sales-timeline'" :data="visibleSales"
                                     :employees="employees" :clients="clients"
                                     v-if="activeView === 'TIMELINE'"></t-timeline>
@@ -33,6 +47,7 @@
     import Vue from 'vue';
     import SalesFilters from './SalesFilters.vue';
     import SalesGrid from './SalesGrid.vue';
+    import SalesReport from './SalesReport.vue';
     import Timeline from './Timeline.vue';
     import SalesService from './SalesService.js';
     import SalesCreate from './SalesCreate.vue';
@@ -54,8 +69,8 @@
                 activeView: "CONDENSED",
                 isLoading: false,
                 visibleSales: [],
-                employees: importedEmployees,
-                clients: importedClients,
+                employees: [],
+                clients: [],
                 sales: [],
                 groupedSales: []
             }
@@ -66,9 +81,17 @@
                 this.visibleSales = this.sales;
                 this.groupedSales = this.groupSales(this.visibleSales);
             },
+            getAllRecordsFromGroup(salesGroup = []) {
+//                return salesGroup.dailyRecords.reduce(function (a, b) {
+//                    return a.records.concat(b.records);
+//                }, []);
+
+                return [].concat.apply([], salesGroup.dailyRecords.map(group => group.records));
+            },
             toggleModal() {
                 $("#t-sales-create").modal("show");
             },
+            getTimeValue: SalesService.getTimeValue.bind(SalesService),
             findSalesGroupBy(criteria, record, salesGroup) {
                 let salesGroupDate = new Date(salesGroup.dateTime);
                 let recordDate = new Date(record.dateTime);
@@ -125,8 +148,9 @@
         },
         mounted() {
             this.sales = importedSales.sort(SalesService.sortByDate);
-            this.visibleSales = this.sales;
             this.employees = importedEmployees;
+            this.clients = importedClients;
+            this.visibleSales = [...this.sales];
             this.groupedSales = this.groupSales(this.visibleSales);
             this.isLoading = false;
         }

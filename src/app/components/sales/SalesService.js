@@ -1,5 +1,6 @@
 export default {
     getFormattedDate: function (criteria, dateTime) {
+        dateTime = typeof dateTime === "string" ? new Date(dateTime) : dateTime;
         if (criteria === "MONTH") {
             return this.getNaturalMonth(dateTime) + ", " + dateTime.getFullYear();
         }
@@ -14,6 +15,18 @@ export default {
             return value.indexOf("px") >= 0 ? Number.parseInt(value.slice(0, -2)) : Number.parseInt(value);
         }
         else return 0;
+    },
+    getTimeValue(criteria, dateTime) {
+        let date = new Date(dateTime);
+        if (criteria === "DAY") {
+            return date.getDate();
+        } else if (criteria === "FRIENDLY_DAY") {
+            return this.getNaturalDay(date);
+        } else if (criteria === "YEAR") {
+            return date.getFullYear();
+        } else if (criteria === "MONTH") {
+            return this.getNaturalMonth(date);
+        }
     },
     formatNumber: function (criteria, number) {
         if (criteria === "CURRENCY") {

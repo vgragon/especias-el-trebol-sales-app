@@ -16,8 +16,8 @@
         <div class="t-person-detail__image"
              :style="{'background-image': 'url(' + (person.image || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSf2u0RWmYALKJ431XNoTKjzu77ERLBIvXKlOEA-Q3DPo2h2rCB') + ')'}"></div>
         <div class="t-person-detail__alias margin--top--sm margin--bottom--lg font-size--md">
-            <span v-if="!isEditModeEnabled">{{person.alias}}</span>
-            <input type="text" class="t-input--text" title="Alias"
+            <span v-if="!isEditModeEnabled" class="font-size--md">{{person.alias}}</span>
+            <input type="text" class="t-input--text font-size--md" title="Alias"
                    placeholder="Define an alias here"
                    v-if="isEditModeEnabled" :value="person.alias"/>
         </div>
@@ -79,8 +79,11 @@
                           :value="person.notes"></textarea>
             </div>
         </div>
+        <div class="pull-left">
+            <button class="t-button t-button--danger margin--right--sm" v-if="isEditModeEnabled" @click="deleteEmployee">Delete</button>
+        </div>
         <div class="pull-right">
-            <button class="t-button t-button--default margin--right--sm" v-if="isEditModeEnabled" @click="saveEmployee">Reset</button>
+            <button class="t-button t-button--default margin--right--sm" v-if="isEditModeEnabled" @click="resetForm">Reset</button>
             <button class="t-button t-button--primary" v-if="isEditModeEnabled" @click="saveEmployee">Save</button>
         </div>
         <div class="clearfix"></div>
@@ -100,7 +103,13 @@
             };
         },
         methods: {
+            deleteEmployee() {
+
+            },
             saveEmployee() {
+
+            },
+            resetForm() {
 
             }
         },
