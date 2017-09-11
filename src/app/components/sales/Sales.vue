@@ -1,23 +1,22 @@
 <template>
     <section class="t-section">
-        <t-sales-create @saleCreate="onSaleCreate"></t-sales-create>
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
                 <div class="t-section__header margin--bottom--sm">
                     <h1 class="heading--h1 inline-block">Sales summary</h1>
-                    <div class="pull-right">
-                        <a href="javascript:void(0)" class="t-link" @click="toggleModal()">Add sales</a>
-                    </div>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
-                        <t-sales-filters :data="sales" @salesFiltered="applySalesGrouping" v-if="!isLoading"
-                                         :dateEnabled="true" :personEnabled="true" :viewEnabled="true"
-                                         @viewSelect="activeView = $event"></t-sales-filters>
+                        <t-sales-create @saleCreate="onSaleCreate"></t-sales-create>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="pull-left margin--bottom--lg">
+                            <i class="glyphicon glyphicon-cog" aria-hidden="true"></i>
+                            <a href="javascript:void(0)" class="t-link" @click="toggleModal()">Configure filters and view</a>
+                        </div>
+                        <div class="clearfix"></div>
                         <t-sales-grid :data="groupedSales" v-if="activeView === 'CONDENSED'"></t-sales-grid>
                         <div class="t-sales-report-container" v-if="activeView === 'REPORT'">
                             <div class="t-sales-report-container__section margin--bottom--md"
@@ -33,6 +32,22 @@
                         <t-timeline :id="'t-sales-timeline'" :data="visibleSales"
                                     :employees="employees" :clients="clients"
                                     v-if="activeView === 'TIMELINE'"></t-timeline>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="t-sales-create" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h2 class="modal-title heading--h2">Configure filter settings</h2>
+                    </div>
+                    <div class="modal-body">
+                        <t-sales-filters :data="sales" @salesFiltered="applySalesGrouping" v-if="!isLoading"
+                                         :dateEnabled="true" :personEnabled="true" :viewEnabled="true"
+                                         @viewSelect="activeView = $event"></t-sales-filters>
                     </div>
                 </div>
             </div>

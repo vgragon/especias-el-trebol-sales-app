@@ -19,7 +19,7 @@
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <t-sales-report :data="visibleSales" :employees="employees" :clients="clients"
-                                :showDate="true"></t-sales-report>
+                                :showDelete="true" :showDate="true"></t-sales-report>
             </div>
         </div>
     </div>
@@ -74,7 +74,10 @@
             let criteria = this.$route.params.criteria;
             this.formattedSalesDate = SalesService.getFormattedDate(criteria, this.salesDateTime);
             this.sales = this.filterByCriteria(criteria, importedSales, this.salesDateTime);
-            this.visibleSales = [...this.sales];
+            this.visibleSales = this.sales.map(sale => {
+                this.salesTotal += sale.amount;
+                return sale;
+            });
         }
     });
 </script>

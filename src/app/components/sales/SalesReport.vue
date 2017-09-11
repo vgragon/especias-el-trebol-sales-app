@@ -31,7 +31,7 @@
                                 <span class="t-number--money"
                                       :class="{'t-number--positive': record.amount > 0, 't-number--neutral': record.amount === 0, 't-number--negative': record.amount < 0}">{{formatNumber('CURRENCY', record.amount)}}</span>
                 </div>
-                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1" v-if="showDelete">
                     <div class="pull-right">
                         <span class="glyphicon glyphicon-trash"></span>
                     </div>
@@ -46,7 +46,7 @@
     import SalesService from './SalesService.js';
 
     export default Vue.component("t-sales-report", {
-        props: ['data', 'employees', 'clients', 'showDate'],
+        props: ['data', 'employees', 'clients', 'showDate', 'showDelete'],
         data() {
             return {
                 sales: []
@@ -54,7 +54,6 @@
         },
         watch: {
             data: function (data) {
-                debugger;
                 this.sales = this.prepareData(data);
             }
         },

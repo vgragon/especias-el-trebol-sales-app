@@ -71,7 +71,7 @@
 
     .t-date-picker {
         position: relative;
-        width: 222px;
+        width: 200px;
         display: inline-block;
 
         .t-icon--calendar {

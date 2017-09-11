@@ -1,41 +1,53 @@
 <template>
-    <div class="t-sales-filters margin--bottom--sm">
-        <h2 class="heading--h2" v-if="dateEnabled || personEnabled">Filter by</h2>
-        <div class="t-filter padding--top--sm padding--bottom--sm" v-if="dateEnabled">
+    <div class="t-sales-filters padding--all--sm margin--bottom--sm">
+        <h2 class="heading--h2 margin--bottom--sm" v-if="dateEnabled || personEnabled">Filters and views</h2>
+        <div class="t-filter margin--bottom--md" v-if="dateEnabled">
             <div class="row">
-                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-                    <label class="align--bottom margin--right--sm">Date</label>
+                <div class="col-xs-2 col-sm-12 col-md-12 col-lg-12">
+                    <label class="align--bottom margin--right--sm font-weight--bold">Date</label>
                 </div>
-                <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-                    <t-date-picker :id="'DATE_1'" :linkedId="'DATE_2'" class="margin--right--sm margin--bottom--sm"
-                                   :placeholder="'Select date'"
-                                   @selectedOption="receiveSelectedOption('DATE_RANGE_1', $event)"></t-date-picker>
-                    <t-date-picker :id="'DATE_2'" :placeholder="'Select date (range)'"
-                                   @selectedOption="receiveSelectedOption('DATE_RANGE_2', $event)"></t-date-picker>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <t-date-picker :id="'DATE_1'" :linkedId="'DATE_2'"
+                                           class="margin--right--sm"
+                                           :placeholder="'Select date'"
+                                           @selectedOption="receiveSelectedOption('DATE_RANGE_1', $event)"></t-date-picker>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <t-date-picker :id="'DATE_2'" :placeholder="'Select date (range)'"
+                                           @selectedOption="receiveSelectedOption('DATE_RANGE_2', $event)"></t-date-picker>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <span class="t-separator--big--horizontal" v-if="dateEnabled"></span>
-        <div class="t-filter padding--top--sm padding--bottom--sm" v-if="personEnabled">
+        <!--<span class="t-separator&#45;&#45;big&#45;&#45;horizontal" v-if="dateEnabled"></span>-->
+        <div class="t-filter margin--bottom--md" v-if="personEnabled">
             <div class="row">
-                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-                    <label class="align--bottom margin--right--sm">Person</label>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <label class="align--bottom margin--right--sm font-weight--bold">Person</label>
                 </div>
-                <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-                    <t-dropdown :placeholder="'Select employee'" :data="employees"
-                                :displayProperty="['givenName', 'familyName']"
-                                class="margin--right--sm margin--bottom--sm"
-                                @selectedOption="receiveSelectedOption('EMPLOYEE', $event)"
-                                :cleanSelectionEnabled="true"></t-dropdown>
-                    <t-dropdown :placeholder="'Select client'" :data="clients" :displayProperty="'name'"
-                                @selectedOption="receiveSelectedOption('CLIENT', $event)"
-                                :cleanSelectionEnabled="true"></t-dropdown>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <t-dropdown :placeholder="'Select employee'" :data="employees"
+                                        :displayProperty="['givenName', 'familyName']"
+                                        class="margin--right--sm"
+                                        @selectedOption="receiveSelectedOption('EMPLOYEE', $event)"
+                                        :cleanSelectionEnabled="true"></t-dropdown>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <t-dropdown :placeholder="'Select client'" :data="clients" :displayProperty="'name'"
+                                        @selectedOption="receiveSelectedOption('CLIENT', $event)"
+                                        :cleanSelectionEnabled="true"></t-dropdown>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <span class="t-separator--big--horizontal" v-if="viewEnabled"></span>
         <div class="t-view" v-if="viewEnabled">
-            <h2 class="heading--h2">View as</h2>
+            <label class="align--bottom margin--right--sm font-weight--bold">View as</label>
             <div class="t-view-button-container padding--top--sm padding--bottom--sm">
                 <div class="t-view-button margin--right--md padding--all--sm"
                      :class="{'t-view-button--active': activeView === 'CONDENSED'}" @click="toggleView('CONDENSED')">
@@ -143,7 +155,6 @@
 
 <style lang="scss">
     .t-sales-filters {
-        padding: 1em;
         border: 1px solid #f0f0f0;
     }
 

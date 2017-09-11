@@ -86,7 +86,7 @@
         height: 34px;
         padding: 8px;
         min-width: 90px;
-        width: 222px;
+        width: 200px;
 
         &.state--disabled {
             opacity: 0.5;
