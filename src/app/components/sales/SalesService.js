@@ -8,6 +8,15 @@ export default {
             return this.getNaturalMonth(dateTime) + " " + dateTime.getDate() + ", " + dateTime.getFullYear();
         }
     },
+    createDateObject: function (value) {
+        let year = value.slice(0, 4);
+        let month = value.slice(5, 7);
+        let day = value.slice(8, 10);
+        let hour = value.slice(11, 13);
+        let minute = value.slice(14, 16);
+        let second = value.slice(17, 19);
+        return new Date(Date.UTC(year, month, day, hour, minute, second));
+    },
     getPixelsNumber: function (value) {
         if (typeof value === "undefined") return 0;
         if (typeof value === "number") return value;

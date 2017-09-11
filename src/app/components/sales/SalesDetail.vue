@@ -62,13 +62,13 @@
             },
             filterByCriteria(criteria, salesRecords = [], valueToCompare) {
                 return salesRecords.filter(record => {
-                    if (criteria === "MONTH") return valueToCompare.getMonth() === new Date(record.dateTime).getMonth();
-                    else if (criteria === "DAY") return record.dateTime === SalesService.toISOString(valueToCompare);
+                    if (criteria === "MONTH") return valueToCompare.getMonth() === SalesService.createDateObject(record.dateTime).getMonth();
+                    else if (criteria === "DAY") return SalesService.createDateObject(record.dateTime).toISOString() === valueToCompare.toISOString();
                 });
             }
         },
         mounted() {
-            this.salesDateTime = new Date(this.$route.params.dateTime);
+            this.salesDateTime = SalesService.createDateObject(this.$route.params.dateTime);
             this.employees = importedEmployees;
             this.clients = importedClients;
             let criteria = this.$route.params.criteria;
