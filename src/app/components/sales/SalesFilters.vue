@@ -26,11 +26,9 @@
         <div class="t-filter margin--bottom--md" v-if="personEnabled">
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <label class="align--bottom margin--right--sm font-weight--bold">Person</label>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <label class="align--bottom margin--right--sm font-weight--bold">Employee</label>
                             <t-dropdown :placeholder="'Select employee'" :data="employees"
                                         :displayProperty="['givenName', 'familyName']"
                                         class="margin--right--sm"
@@ -38,6 +36,7 @@
                                         :cleanSelectionEnabled="true"></t-dropdown>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <label class="align--bottom margin--right--sm font-weight--bold">Client</label>
                             <t-dropdown :placeholder="'Select client'" :data="clients" :displayProperty="'name'"
                                         @selectedOption="receiveSelectedOption('CLIENT', $event)"
                                         :cleanSelectionEnabled="true"></t-dropdown>
@@ -166,9 +165,6 @@
     .t-filter {
         label {
             display: inline-block;
-            max-width: 90px;
-            min-width: 50px;
-            width: 10%;
             font-weight: normal;
         }
     }

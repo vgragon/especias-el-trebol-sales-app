@@ -1,22 +1,27 @@
 <template>
     <div class="t-sales-detail">
-        <div class="pull-right">
-            <label>Edit mode</label>
-            <div class="t-mode t-mode--edit">
-                <div class="t-mode__option" :class="{'t-mode__option--enabled': isEditModeEnabled}"
-                     @click="isEditModeEnabled = true">
-                    <span>ON</span>
-                </div>
-                <div class="t-mode__option" :class="{'t-mode__option--enabled': !isEditModeEnabled}"
-                     @click="isEditModeEnabled = false">
-                    <span>OFF</span>
-                </div>
-            </div>
-        </div>
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <div class="t-section__header margin--bottom--sm">
-                    <h1 class="heading--h1 inline-block">Sales records of {{formattedSalesDate}}</h1>
+                <div class="margin--bottom--sm">
+                    <div class="pull-left">
+                        <div class="t-section__header">
+                            <h1 class="heading--h1 inline-block">Sales records of {{formattedSalesDate}}</h1>
+                        </div>
+                    </div>
+                    <div class="pull-right">
+                        <label>Edit mode</label>
+                        <div class="t-mode t-mode--edit">
+                            <div class="t-mode__option" :class="{'t-mode__option--enabled': isEditModeEnabled}"
+                                 @click="isEditModeEnabled = true">
+                                <span>ON</span>
+                            </div>
+                            <div class="t-mode__option" :class="{'t-mode__option--enabled': !isEditModeEnabled}"
+                                 @click="isEditModeEnabled = false">
+                                <span>OFF</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -33,7 +38,7 @@
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <t-sales-report :data="visibleSales" :employees="employees" :clients="clients"
                                 @salesDelete="removeSalesRecordFromArray($event)"
-                                :isEditModeEnabled="isEditModeEnabled"
+                                :isEditModeEnabled="isEditModeEnabled" @salesSave="saveSalesRecords($event)"
                                 :showDelete="true" :showDate="true"></t-sales-report>
             </div>
         </div>
@@ -72,6 +77,20 @@
                     this.salesTotal += record.amount;
                     return record;
                 });
+            },
+            saveSalesRecords(sales) {
+                //TODO: Persist modified sales records
+                this.sales = sales.map(record => Object.assign({
+                    employeeInstance: record["employeeInstance"],
+                    clientInstance: record["clientInstance"]
+                }, record));
+
+                this.salesTotal = 0;
+                this.visibleSales = this.sales.map(record => {
+                    this.salesTotal += record.amount;
+                    return record;
+                });
+                this.isEditModeEnabled = undefined;
             },
             applySalesFilter(sales) {
                 this.salesTotal = 0;

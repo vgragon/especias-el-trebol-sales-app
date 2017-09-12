@@ -10,12 +10,13 @@ export default {
     },
     createDateObject: function (value) {
         let year = value.slice(0, 4);
-        let month = value.slice(5, 7);
+        let month = value.slice(5, 7) - 1;
         let day = value.slice(8, 10);
-        let hour = value.slice(11, 13);
-        let minute = value.slice(14, 16);
-        let second = value.slice(17, 19);
-        return new Date(Date.UTC(year, month, day, hour, minute, second));
+        let date = new Date();
+        date.setYear(year);
+        date.setMonth(month);
+        date.setDate(day);
+        return date;
     },
     getPixelsNumber: function (value) {
         if (typeof value === "undefined") return 0;

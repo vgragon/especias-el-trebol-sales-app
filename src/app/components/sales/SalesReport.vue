@@ -39,15 +39,20 @@
                           :class="{'t-number--positive': record.amount > 0, 't-number--neutral': record.amount === 0, 't-number--negative': record.amount < 0}">{{formatNumber('CURRENCY', record.amount)}}</span>
                     <input type="number" v-if="isEditModeEnabled" class="t-input t-input--text t-input--small"
                            title="Amount" placeholder="Enter amount" :value="record.amount"
-                           @change="logSome(record, $event.target.value)"/>
+                           @change="updateRecordAmount(record, $event.target.value)"/>
                 </div>
-                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1" v-if="showDelete">
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1" v-if="showDelete && isEditModeEnabled">
                     <div class="pull-right">
                         <span class="glyphicon glyphicon-trash t-table__button"
                               @click="toggleModal('delete', record)"></span>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="pull-right margin--top--sm">
+            <button type="button" v-if="isEditModeEnabled" class="t-button t-button--primary"
+                    @click="saveSalesRecords">Save
+            </button>
         </div>
         <t-sales-delete :record="salesRecordToDelete" @salesDelete="deleteSale($event)"></t-sales-delete>
     </div>
@@ -74,14 +79,20 @@
                 this.sales = this.prepareData(data);
             },
             isEditModeEnabled: function (value) {
-                if (value) this.originalSalesRecords = [...this.sales];
-                else this.sales = [...this.originalSalesRecords];
+                if (value) this.originalSalesRecords = this.sales.map(record => Object.assign({
+                    employeeInstance: record["employeeInstance"],
+                    clientInstance: record["clientInstance"]
+                }, record));
+                else if (value === false) this.sales = this.originalSalesRecords.map(record => Object.assign({
+                    employeeInstance: record["employeeInstance"],
+                    clientInstance: record["clientInstance"]
+                }, record));
             }
         },
         methods: {
-            logSome(record, val) {
-                record.amount = val;
-                console.log(record)
+            updateRecordAmount(record, val) {
+                record.amount = Number.parseFloat(val);
+                record["hasChanged"] = true;
             },
             getPropertyValue(obj, propertyNameArr, defaultValue) {
                 if (typeof obj === "undefined") return "Not found";
@@ -99,11 +110,15 @@
                 if (modalType === "delete") $("#t-sales-delete").modal("show");
                 else if (modalType === "edit") $("#t-sales-edit").modal("show");
             },
+            saveSalesRecords() {
+                this.$emit("salesSave", this.sales);
+            },
             deleteSale() {
                 this.$emit("salesDelete", this.salesRecordToDelete);
                 $("#t-sales-delete").modal("hide");
             },
             receiveSelectedOption(criteria, record, option) {
+                record["hasChanged"] = true;
                 switch (criteria) {
                     case "EMPLOYEE":
                         record.employeeID = option ? option.id : undefined;
@@ -117,7 +132,8 @@
                 }
             },
             prepareData(data = []) {
-                return data.map(record => {
+                return data.map(d => {
+                    let record = Object.assign({}, d);
                     this.salesTotal += record.amount;
                     Object.defineProperties(record, {
                         "employeeInstance": {
