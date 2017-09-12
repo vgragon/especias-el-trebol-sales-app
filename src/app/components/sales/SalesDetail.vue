@@ -1,5 +1,18 @@
 <template>
     <div class="t-sales-detail">
+        <div class="pull-right">
+            <label>Edit mode</label>
+            <div class="t-mode t-mode--edit">
+                <div class="t-mode__option" :class="{'t-mode__option--enabled': isEditModeEnabled}"
+                     @click="isEditModeEnabled = true">
+                    <span>ON</span>
+                </div>
+                <div class="t-mode__option" :class="{'t-mode__option--enabled': !isEditModeEnabled}"
+                     @click="isEditModeEnabled = false">
+                    <span>OFF</span>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="t-section__header margin--bottom--sm">
@@ -19,6 +32,8 @@
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <t-sales-report :data="visibleSales" :employees="employees" :clients="clients"
+                                @salesDelete="removeSalesRecordFromArray($event)"
+                                :isEditModeEnabled="isEditModeEnabled"
                                 :showDelete="true" :showDate="true"></t-sales-report>
             </div>
         </div>
@@ -45,10 +60,19 @@
                 visibleSales: [],
                 employees: [],
                 clients: [],
-                salesTotal: 0
+                salesTotal: 0,
+                isEditModeEnabled: false
             };
         },
         methods: {
+            removeSalesRecordFromArray(salesRecord) {
+                this.salesTotal = 0;
+                this.sales = this.sales.filter(record => salesRecord.id !== record.id);
+                this.visibleSales = this.visibleSales.filter(record => salesRecord.id !== record.id).map(record => {
+                    this.salesTotal += record.amount;
+                    return record;
+                });
+            },
             applySalesFilter(sales) {
                 this.salesTotal = 0;
                 this.visibleSales = sales.map(record => {

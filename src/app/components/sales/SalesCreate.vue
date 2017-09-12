@@ -1,38 +1,24 @@
 <template>
-    <!--<div class="modal fade" id="t-sales-create" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">-->
-    <!--<div class="modal-dialog" role="document">-->
-    <!--<div class="modal-content">-->
-    <!--<div class="modal-header">-->
-    <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span-->
-    <!--aria-hidden="true">&times;</span></button>-->
-    <!--<h2 class="modal-title heading&#45;&#45;h2">Add sales record</h2>-->
-    <!--</div>-->
-    <!--<div class="modal-body">-->
-    <!--<div class="pull-right margin&#45;&#45;bottom&#45;&#45;sm">-->
-    <!--<em class="font-size&#45;&#45;xs">Fields marked with <strong class="t-indicator&#45;&#45;mandatory">*</strong>-->
-    <!--are required.</em>-->
-    <!--</div>-->
-    <!--<div class="clearfix"></div>-->
     <form class="t-form--create--sale padding--all--sm">
         <h2 class="heading--h2 margin--bottom--sm">Create new sale</h2>
         <div class="form-group margin--bottom--md">
             <label class="margin--bottom--xs">Date</label><sup
                 class="t-indicator t-indicator--mandatory">*</sup>
             <t-date-picker class="block" :id="'DATE_3'" :placeholder="'Select date'"
-                           :clean="[cleanFields]"
+                           :clean="cleanFields"
                            @selectedOption="receiveSelectedOption('DATE', $event)"></t-date-picker>
         </div>
         <div class="form-group margin--bottom--md">
             <label class="margin--bottom--xs">Employee</label><sup
                 class="t-indicator t-indicator--mandatory">*</sup>
             <t-dropdown class="block" :data="employees" :displayProperty="['givenName', 'familyName']"
-                        :clean="[cleanFields]"
+                        :clean="cleanFields"
                         @selectedOption="receiveSelectedOption('EMPLOYEE', $event)"></t-dropdown>
         </div>
         <div class="form-group margin--bottom--md">
             <label class="margin--bottom--xs">Client</label><sup
                 class="t-indicator t-indicator--mandatory">*</sup>
-            <t-dropdown class="block" :data="clients" :displayProperty="'name'" :clean="[cleanFields]"
+            <t-dropdown class="block" :data="clients" :displayProperty="'name'" :clean="cleanFields"
                         @selectedOption="receiveSelectedOption('CLIENT', $event)"></t-dropdown>
         </div>
         <div class="form-group margin--bottom--md">
@@ -61,17 +47,6 @@
         </div>
         <div class="clearfix"></div>
     </form>
-    <!--</div>-->
-    <!--<div class="modal-footer">-->
-    <!--<button type="button" class="t-button t-button&#45;&#45;default margin&#45;&#45;right&#45;&#45;sm" @click="resetForm"-->
-    <!--data-dismiss="modal">-->
-    <!--Cancel-->
-    <!--</button>-->
-    <!--<button type="button" class="t-button t-button&#45;&#45;primary" @click="createSale">Save</button>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
 </template>
 
 <script>
