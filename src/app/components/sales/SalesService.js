@@ -68,6 +68,9 @@ export default {
             dif + pad(tzo / 60) +
             ':' + pad(tzo % 60);
     },
+    areDatesTheSameDay: function (date1, date2) {
+        return ("" + date1.getFullYear() + date1.getMonth() + date1.getDate()) === ("" + date2.getFullYear() + date2.getMonth() + date2.getDate());
+    },
     getMonthNumberJS: function (monthName) {
         switch (monthName) {
             case "January":

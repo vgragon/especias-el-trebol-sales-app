@@ -26,7 +26,7 @@
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <t-sales-filters :data="sales" :busEvent="'salesFilterSelected'"
-                                 @salesFiltered="applySalesFilter($event)"
+                                 @salesFiltered="applySalesFilter($event)" :title="'Filters'"
                                  :dateEnabled="false" :personEnabled="true" :viewEnabled="false"></t-sales-filters>
                 <div class="margin--bottom--sm font-size--md pull-right">
                     <strong>Total amount:</strong>
@@ -106,7 +106,7 @@
             filterByCriteria(criteria, salesRecords = [], valueToCompare) {
                 return salesRecords.filter(record => {
                     if (criteria === "MONTH") return valueToCompare.getMonth() === SalesService.createDateObject(record.dateTime).getMonth();
-                    else if (criteria === "DAY") return SalesService.createDateObject(record.dateTime).toISOString() === valueToCompare.toISOString();
+                    else if (criteria === "DAY") return SalesService.areDatesTheSameDay(SalesService.createDateObject(record.dateTime), valueToCompare);
                 });
             }
         },
