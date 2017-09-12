@@ -47,7 +47,7 @@
                     <div class="modal-body">
                         <t-sales-filters :data="sales" @salesFiltered="applySalesGrouping" v-if="!isLoading"
                                          :dateEnabled="true" :personEnabled="true" :viewEnabled="true"
-                                         @viewSelect="activeView = $event"></t-sales-filters>
+                                         :title="'Filters and views'" @viewSelect="activeView = $event"></t-sales-filters>
                     </div>
                 </div>
             </div>

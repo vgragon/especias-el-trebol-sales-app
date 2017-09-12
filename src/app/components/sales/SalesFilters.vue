@@ -1,6 +1,6 @@
 <template>
     <div class="t-sales-filters padding--all--sm margin--bottom--sm">
-        <h2 class="heading--h2 margin--bottom--sm" v-if="dateEnabled || personEnabled">Filters and views</h2>
+        <h2 class="heading--h2 margin--bottom--sm" v-if="dateEnabled || personEnabled">{{title}}</h2>
         <div class="t-filter margin--bottom--md" v-if="dateEnabled">
             <div class="row">
                 <div class="col-xs-2 col-sm-12 col-md-12 col-lg-12">
@@ -80,7 +80,7 @@
     let importedClients = require('../../../../data/clients.json');
 
     export default Vue.component("t-sales-filters", {
-        props: ['data', 'dateEnabled', 'personEnabled', 'viewEnabled'],
+        props: ['title', 'data', 'dateEnabled', 'personEnabled', 'viewEnabled'],
         components: [
             Dropdown,
             DatePicker
