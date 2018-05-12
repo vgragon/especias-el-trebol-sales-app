@@ -1,19 +1,23 @@
 const webpackMerge = require("webpack-merge");
 const path = require("path");
-
 const METADATA = require("./webpack.metadata.js");
 const commonConfiguration = require("./webpack.common.js");
 const helpers = require("./webpack.helpers.js");
 
-// plugins
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const DefinePlugin = require("webpack/lib/DefinePlugin");
 
 let config = webpackMerge(commonConfiguration, {
     devtool: "cheap-source-map",
     output: {
         path: helpers.root("dist"),
         filename: "bundle.js"
+    },
+    module: {
+        loaders: [{
+            test: /\.json$/,
+            exclude: /node_modules/,
+            loader: 'json-loader'
+        }]
     },
     devServer: {
         port: METADATA.port,
@@ -27,15 +31,6 @@ let config = webpackMerge(commonConfiguration, {
         }
     },
     plugins: [
-        new DefinePlugin({
-            "ENV": JSON.stringify(METADATA.ENV),
-            "baseUrl": JSON.stringify(METADATA.baseUrl),
-            "carbon": {
-                "application_slug": JSON.stringify(METADATA.carbon.application_slug),
-                "https": JSON.stringify(METADATA.carbon.https),
-                "domain": JSON.stringify(METADATA.carbon.domain)
-            }
-        }),
         new HtmlWebpackPlugin({
             filename: "index.html",
             template: "src/index.ejs",

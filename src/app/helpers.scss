@@ -1,0 +1,209 @@
+@import './variables';
+
+.color--white {
+  color: $white;
+}
+
+.color--black {
+  color: $black;
+}
+
+.color--green {
+  color: $green;
+}
+
+.font-size--xs {
+  font-size: $font-size--small !important;
+}
+
+.font-size--sm {
+  font-size: $font-size--normal !important;
+}
+
+.font-size--md {
+  font-size: $font-size--big !important;
+}
+
+.font-size--lg {
+  font-size: $font-size--jumbo !important;
+}
+
+.padding--all--xs {
+  padding: $spacing-xs;
+}
+
+.padding--all--sm {
+  padding: $spacing-sm;
+}
+
+.padding--all--md {
+  padding: $spacing-md;
+}
+
+.padding--all--lg {
+  padding: $spacing-lg;
+}
+
+.padding--top--xs {
+  padding-top: $spacing-xs;
+}
+
+.padding--top--sm {
+  padding-top: $spacing-sm;
+}
+
+.padding--top--md {
+  padding-top: $spacing-md;
+}
+
+.padding--top--lg {
+  padding-top: $spacing-lg;
+}
+
+.padding--bottom--xs {
+  padding-bottom: $spacing-xs;
+}
+
+.padding--bottom--sm {
+  padding-bottom: $spacing-sm;
+}
+
+.padding--bottom--md {
+  padding-bottom: $spacing-md;
+}
+
+.padding--bottom--lg {
+  padding-bottom: $spacing-lg;
+}
+
+.padding--right--xs {
+  padding-right: $spacing-xs;
+}
+
+.padding--right--sm {
+  padding-right: $spacing-sm;
+}
+
+.padding--right--md {
+  padding-right: $spacing-md;
+}
+
+.padding--right--lg {
+  padding-right: $spacing-lg;
+}
+
+.padding--left--xs {
+  padding-left: $spacing-xs;
+}
+
+.padding--left--sm {
+  padding-left: $spacing-sm;
+}
+
+.padding--left--md {
+  padding-left: $spacing-md;
+}
+
+.padding--left--lg {
+  padding-left: $spacing-lg;
+}
+
+.margin--top--xs {
+  margin-top: $spacing-xs;
+}
+
+.margin--top--sm {
+  margin-top: $spacing-sm;
+}
+
+.margin--top--md {
+  margin-top: $spacing-md;
+}
+
+.margin--top--lg {
+  margin-top: $spacing-lg;
+}
+
+.margin--right--xs {
+  margin-right: $spacing-xs;
+}
+
+.margin--right--sm {
+  margin-right: $spacing-sm;
+}
+
+.margin--right--md {
+  margin-right: $spacing-md;
+}
+
+.margin--right--lg {
+  margin-right: $spacing-lg;
+}
+
+.margin--bottom--xs {
+  margin-bottom: $spacing-xs !important;
+}
+
+.margin--bottom--sm {
+  margin-bottom: $spacing-sm !important;
+}
+
+.margin--bottom--md {
+  margin-bottom: $spacing-md !important;
+}
+
+.margin--bottom--lg {
+  margin-bottom: $spacing-lg !important;
+}
+
+.background--almost-black {
+  background-color: $almostBlack;
+}
+
+.background--grey {
+  background-color: $grey;
+}
+
+.heading--h1 {
+  font-size: $font-size--jumbo;
+  margin: 0;
+  font-weight: bold;
+}
+
+.heading--h2 {
+  font-size: $font-size--big;
+  margin: 0;
+  font-weight: bold;
+}
+
+.align--top {
+  vertical-align: middle;
+}
+
+.align--bottom {
+  vertical-align: bottom;
+}
+
+.font-weight--bold {
+  font-weight: bold !important;
+}
+
+.visibility--hidden {
+  visibility: hidden;
+}
+
+.visibility--visible {
+  visibility: visible;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.block {
+  display: block !important;
+}
+
+.align-center {
+  text-align: center;
+}

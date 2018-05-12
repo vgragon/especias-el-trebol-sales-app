@@ -1,0 +1,36 @@
+[
+  {
+    "id": 0,
+    "givenName": "Vicente",
+    "familyName": "Grajeda",
+    "alias": "Vicente Grajeda",
+    "image": "https://scontent.fntr4-1.fna.fbcdn.net/v/t1.0-9/10420204_10153609539702345_4671279541399565291_n.jpg?oh=983c295b1f920f50eadc750ffaa2eb30&oe=59F3E080",
+    "telephoneNumber": "8117100358",
+    "cellphoneNumber": "919839309",
+    "primaryEmail": "vicente.grajeda@gmail.com",
+    "homeAddress": "Somewhere, 44330, Monterrey, Nuevo León"
+  },
+  {
+    "id": 1,
+    "givenName": "Dulce",
+    "familyName": "Gonzalez",
+    "alias": "Dulce Gonzalez",
+    "image": "https://d26dzxoao6weri3hh.cloudfront.net/items/441c260r1A1S2d0L2b0W/Screen%20Shot%202017-08-12%20at%2010.47.22%20AM.png?v=1c985ce55",
+    "telephoneNumber": "329032093",
+    "cellphoneNumber": "919839309",
+    "primaryEmail": "dulce.gonzalez@gmail.com",
+    "secondaryEmail": "dulce@gonzalez.com",
+    "homeAddress": "Melchor 332, 12445, Culiacan, Sinaloa"
+  },
+  {
+    "id": 2,
+    "givenName": "Juan",
+    "familyName": "Perez",
+    "alias": "Juancho",
+    "telephoneNumber": "8117100358",
+    "cellphoneNumber": "919839309",
+    "primaryEmail": "juan.perez@gmail.com",
+    "secondaryEmail": "juan@me.com",
+    "homeAddress": "Nowhere, 84000, San Francisco, California"
+  }
+]
