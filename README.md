@@ -1,6 +1,6 @@
 # Sales application: Especias el Trébol
 
-Note: Use the `develop` branch to start the application by using `npm start` or see the POC on http://sales.especiaseltrebol.com.
+Note: To start the application use `npm start` or see the POC on http://sales.especiaseltrebol.com.
 
 This application is a proof of concept. It utilizes (not limited to) the following web technologies:
 - [Vue.js](https://vuejs.org/)
